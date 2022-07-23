@@ -1,0 +1,3 @@
+[submodule "src/third/cortexm-AES"]
+	path = src/third/cortexm-AES
+	url = https://github.com/jnk0le/cortexm-AES

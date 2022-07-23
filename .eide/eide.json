@@ -142,8 +142,7 @@
   "uploader": "OpenOCD",
   "srcDirs": [
     "./.eide/deps",
-    "./src",
-    "./third"
+    "./src"
   ],
   "virtualFolder": {
     "name": "<virtual_root>",
@@ -151,7 +150,17 @@
     "folders": []
   },
   "excludeList": [
-    "src/lib"
+    "src/lib",
+    "src/third/cortexm-AES/aes/tests",
+    "src/third/cortexm-AES/aes/target/CM3_1T",
+    "src/third/cortexm-AES/aes/target/CM3_1T_modes",
+    "src/third/cortexm-AES/aes/target/CM3_sBOX",
+    "src/third/cortexm-AES/aes/target/CM4_DSPsBOX",
+    "src/third/cortexm-AES/aes/target/CM7_1T",
+    "src/third/cortexm-AES/aes/target/CM7_1T_modes",
+    "src/third/cortexm-AES/aes/target/CM7_DSPsBOX",
+    "src/third/cortexm-AES/aes/target/CM7_sBOX",
+    "src/third/cortexm-AES/aes/target/CM0_sBOX"
   ],
   "outDir": "build",
   "deviceName": null,
