@@ -20,15 +20,5 @@
 
 void appmain() {
   ch9329_init();
-  // norflash_init();
-
-  HAL_Delay(10000);
-  // extern void CM0_FASTMULsBOX_AES_decrypt(uint8_t* rk, const uint8_t* in, uint8_t* out, size_t rounds);
-
-  // uint8_t out=0;
-  // CM0_FASTMULsBOX_AES_decrypt(NULL, NULL, &out, 0);
-  // HAL_Delay(out);
-
-	HAL_Delay(1000);
-
+  norflash_init();
 }

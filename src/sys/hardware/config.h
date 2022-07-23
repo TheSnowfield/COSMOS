@@ -37,10 +37,11 @@
 #define BUTTON_PIN_KEY_B GPIO_PIN_12
 
 static GPIO_InitTypeDef port_swd = {
-  .Pin = GPIO_PIN_13 | GPIO_PIN_14,
-  .Mode = GPIO_MODE_AF_PP,
-  .Speed = GPIO_SPEED_FREQ_HIGH
+  .Pin = GPIO_PIN_13 | GPIO_PIN_14
 };
+
+// usart1 is used for ch9329
+////////////////////////////////////////////////////////
 
 static GPIO_InitTypeDef port_usart1 = {
   .Pin = USART_PIN_TX | USART_PIN_RX,
@@ -48,13 +49,6 @@ static GPIO_InitTypeDef port_usart1 = {
   .Pull = GPIO_NOPULL,
   .Speed = GPIO_SPEED_FREQ_HIGH,
   .Alternate = GPIO_AF0_USART1
-};
-
-static GPIO_InitTypeDef port_usart1_sw = {
-  .Pin = USART_PIN_TX | USART_PIN_RX,
-  .Mode = GPIO_MODE_OUTPUT_PP,
-  .Pull = GPIO_NOPULL,
-  .Speed = GPIO_SPEED_FREQ_HIGH
 };
 
 static GPIO_InitTypeDef port_usart1_ctl = {
@@ -84,7 +78,7 @@ static GPIO_InitTypeDef port_i2c1 = {
   .Mode = GPIO_MODE_AF_OD,
   .Pull = GPIO_NOPULL,
   .Speed = GPIO_SPEED_FREQ_HIGH,
-  .Alternate = GPIO_AF4_I2C1,
+  .Alternate = GPIO_AF4_I2C1
 };
 
 static I2C_HandleTypeDef i2c1 = {
@@ -107,22 +101,22 @@ static SPI_HandleTypeDef spi1 = {
   .Init.Mode = SPI_MODE_MASTER,
   .Init.Direction = SPI_DIRECTION_2LINES,
   .Init.DataSize = SPI_DATASIZE_4BIT,
-  .Init.CLKPolarity = SPI_POLARITY_LOW,
-  .Init.CLKPhase = SPI_PHASE_1EDGE,
+  .Init.CLKPolarity = SPI_POLARITY_HIGH,
+  .Init.CLKPhase = SPI_PHASE_2EDGE,
   .Init.NSS = SPI_NSS_SOFT,
-  .Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8,
+  .Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128,
   .Init.FirstBit = SPI_FIRSTBIT_MSB,
   .Init.TIMode = SPI_TIMODE_DISABLE,
   .Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE,
   .Init.CRCPolynomial = 7,
   .Init.CRCLength = SPI_CRC_LENGTH_DATASIZE,
-  .Init.NSSPMode = SPI_NSS_PULSE_ENABLE
+  .Init.NSSPMode = SPI_NSS_PULSE_DISABLE
 };
 
 static GPIO_InitTypeDef port_spi1_ctl = {
   .Pin = SPI1_PIN_CTL_RST | SPI1_PIN_CTL_CS,
   .Mode = GPIO_MODE_OUTPUT_PP,
-  .Speed = GPIO_SPEED_FREQ_HIGH,
+  .Speed = GPIO_SPEED_FREQ_HIGH
 };
 
 static GPIO_InitTypeDef port_spi1 = {
@@ -130,7 +124,7 @@ static GPIO_InitTypeDef port_spi1 = {
   .Mode = GPIO_MODE_AF_PP,
   .Pull = GPIO_NOPULL,
   .Speed = GPIO_SPEED_FREQ_HIGH,
-  .Alternate = GPIO_AF0_SPI1,
+  .Alternate = GPIO_AF0_SPI1
 };
 
 // Button keys

@@ -2,6 +2,7 @@
 #define __SYS_HARDWARE_CH9329_H
 
 #include <stdbool.h>
+#define packed __attribute__((packed))
 
 typedef enum {
   ok,
@@ -42,7 +43,7 @@ typedef enum {
   hw1_general_kbd = 0x81,
   hw2_general_mouse = 0x83,
   hw3_general_custom_usb_hid = 0x83,
-} __attribute__((__packed__)) ch9329_usb_mode;
+} packed ch9329_usb_mode;
 
 typedef enum {
   sw0_protocol,
@@ -51,7 +52,7 @@ typedef enum {
   hw0_protocol,
   hw1_ascii,
   hw2_proxy,
-} __attribute__((__packed__)) ch9329_serial_mode;
+} packed ch9329_serial_mode;
 
 typedef enum {
   manufacturer,
@@ -89,8 +90,7 @@ typedef struct {
   uint32_t reserved1;
   uint32_t reserved2;
   uint32_t reserved3;
-} __attribute__((__packed__)) ch9329_para_cfg_t;
-
+} packed ch9329_para_cfg_t;
 
 typedef struct {
   uint8_t control_left  : 1;
@@ -218,7 +218,7 @@ typedef struct {
   ch9329_keycode_t key4;
   ch9329_keycode_t key5;
   ch9329_keycode_t key6;
-} __attribute__((__packed__)) ch9329_keystat_t;
+} packed ch9329_keystat_t;
 
 #ifdef _CH9329_INTERNAL
 
@@ -245,11 +245,11 @@ typedef struct {
 #define PACKET_SIZE(pkt) (2 + 1 + 1 + 1 + (pkt)->length + 1)
 
 typedef struct {
-  uint16_t   magic;
-  uint8_t    address;
-  uint8_t    command;
-  uint8_t    length;
-  uint8_t    buffer[MAX_BUFFER_SIZE];
+  uint16_t magic;
+  uint8_t  address;
+  uint8_t  command;
+  uint8_t  length;
+  uint8_t  buffer[MAX_BUFFER_SIZE];
 } packet_t;
 
 #endif

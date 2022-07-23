@@ -44,28 +44,26 @@ void _packet_init(packet_t *packet, uint8_t address) {
 
 void _packet_set_command(packet_t *packet, uint8_t command,
                          uint8_t *data, uint8_t length) {
-  if(!packet) return; {
-    packet->command = command;
-    if(!data) return; {
-      packet->length = length;
-      memcpy(packet->buffer, data, length);
-    }
-  }
+  if(!packet) return;
+  packet->command = command;
+  
+  if(!data) return;
+  packet->length = length;
+  memcpy(packet->buffer, data, length);
 }
 
 void _packet_update_checksum(packet_t *packet) {
-  if(!packet) return; {
-    uint8_t *ptr = (uint8_t *)packet;
-    uint8_t checksum = 0;
-    for(uint8_t i = 0; i < PACKET_SIZE(packet) - 1; ++i) {
-      checksum += ptr[i];
-    }
-    packet->buffer[packet->length] = checksum;
-  }
+  if(!packet) return;
+  uint8_t checksum = 0;
+  uint8_t *ptr = (uint8_t *)packet;
+  for(uint8_t i = 0; i < PACKET_SIZE(packet) - 1; ++i) checksum += ptr[i];
+  packet->buffer[packet->length] = checksum;
 }
 
 ch9329_stat_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
                             void** recvdata, uint8_t *recvlen) {
+
+  // init a packet
   packet_t packet; {
     _packet_init(&packet, 0x00);
     _packet_set_command(&packet, command, data, length);
