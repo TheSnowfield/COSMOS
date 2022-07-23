@@ -1,0 +1,183 @@
+{
+  "name": "Cosmos",
+  "type": "ARM",
+  "mode": "Debug",
+  "toolchain": "AC6",
+  "dependenceList": [
+    {
+      "groupName": "custom",
+      "depList": [
+        {
+          "name": "default",
+          "incList": [
+            "./src/include",
+            "./src/core",
+            "./src/core/include",
+            "./src/core/hal/include",
+            "./src/app",
+            "./src/ui"
+          ],
+          "libList": [],
+          "sourceDirList": [],
+          "defineList": [
+            "STM32F030x6"
+          ]
+        }
+      ]
+    }
+  ],
+  "compileConfig": {
+    "cpuType": "Cortex-M0",
+    "floatingPointHardware": "none",
+    "useCustomScatterFile": false,
+    "scatterFilePath": "undefined",
+    "storageLayout": {
+      "RAM": [
+        {
+          "tag": "RAM",
+          "id": 1,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "noInit": false
+        },
+        {
+          "tag": "RAM",
+          "id": 2,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "noInit": false
+        },
+        {
+          "tag": "RAM",
+          "id": 3,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "noInit": false
+        },
+        {
+          "tag": "IRAM",
+          "id": 1,
+          "mem": {
+            "startAddr": "0x20000000",
+            "size": "0x1000"
+          },
+          "isChecked": true,
+          "noInit": false
+        },
+        {
+          "tag": "IRAM",
+          "id": 2,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "noInit": false
+        }
+      ],
+      "ROM": [
+        {
+          "tag": "ROM",
+          "id": 1,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "isStartup": false
+        },
+        {
+          "tag": "ROM",
+          "id": 2,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "isStartup": false
+        },
+        {
+          "tag": "ROM",
+          "id": 3,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "isStartup": false
+        },
+        {
+          "tag": "IROM",
+          "id": 1,
+          "mem": {
+            "startAddr": "0x8000000",
+            "size": "0x8000"
+          },
+          "isChecked": true,
+          "isStartup": true
+        },
+        {
+          "tag": "IROM",
+          "id": 2,
+          "mem": {
+            "startAddr": "",
+            "size": ""
+          },
+          "isChecked": false,
+          "isStartup": false
+        }
+      ]
+    },
+    "options": "null"
+  },
+  "uploader": "OpenOCD",
+  "srcDirs": [
+    "./.eide/deps",
+    "./src",
+    "./third"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": []
+  },
+  "excludeList": [
+    "src/lib"
+  ],
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "uploadConfig": {
+    "bin": "",
+    "target": "stm32f0x",
+    "interface": "cmsis-dap",
+    "baseAddr": "0x08000000"
+  },
+  "uploadConfigMap": {
+    "JLink": {
+      "bin": "",
+      "baseAddr": "0x08000000",
+      "cpuInfo": {
+        "vendor": "ST",
+        "cpuName": "STM32F103C8"
+      },
+      "proType": 1,
+      "speed": 8000,
+      "otherCmds": ""
+    }
+  },
+  "miscInfo": {
+    "uid": "10d6bb63f3d5a0406f9deba4449aba3b"
+  },
+  "targets": {},
+  "version": "3.1"
+}
