@@ -1,11 +1,13 @@
 ## COSMOS
-COSMOS❀ is a usb key that can store your accounts and passwords safely.  
-<img src="image/cosmos-body.jpg" width="450px">
+COSMOS✿ is a usb key that can store your accounts and passwords safely.
+
+<img src="image/cosmos-front.jpg" width="450px">
+<img src="image/cosmos-back.jpg" width="450px">
 
 It has an onboard 64MBit (8MB) NOR-FLASH and an stm32f030k6t6 mcu running under 48Mhz.  
 Work with a ch9329 USB-HID chip, that can type your password and accounts automatically.
 
-COSMOS❀ uses AES encryption to encrypt your data,  
+COSMOS✿ uses AES encryption to encrypt your data,  
 all your data are encrypted and stored in the nor flash.
 
 Now it's under active development. Stay tuned :3.  

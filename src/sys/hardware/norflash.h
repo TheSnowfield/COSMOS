@@ -41,6 +41,11 @@ typedef enum {
 #define NORFLASH_CMD_ENABLE_RESET     0x66
 #define NORFLASH_CMD_RESET_DEVICE     0x99
 
+#define norflash_select() SPI1_PORT->BRR = (uint32_t)SPI1_PIN_CTL_CS
+#define norflash_unselect() SPI1_PORT->BSRR = (uint32_t)SPI1_PIN_CTL_CS
+#define norflash_reset() SPI1_PORT->BRR = (uint32_t)SPI1_PIN_CTL_RST
+#define norflash_unreset() SPI1_PORT->BSRR = (uint32_t)SPI1_PIN_CTL_RST
+
 #endif
 
 void norflash_init();
