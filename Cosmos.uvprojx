@@ -48,14 +48,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
+          <OutputDirectory>..\build\Debug\</OutputDirectory>
           <OutputName>Cosmos</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\build\Debug\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F030x6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\src\include;..\src\core;..\src\core\include;..\src\core\hal\include;..\src\;..\src\app;..\src\sys;..\src\sys\hardware;..\src\ui</IncludePath>
+              <IncludePath>src\include;src\core;src\core\include;src\core\hal\include;src\;src\app;src\sys;src\sys\hardware;src\ui</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -384,9 +384,9 @@
           <GroupName>MAIN</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>boot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\main.c</FilePath>
+              <FilePath>src\boot.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -396,302 +396,302 @@
             <File>
               <FileName>stm32f0xx_hal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_adc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_adc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_adc_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_adc_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_adc_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_can.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_can.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_can.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_cec.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_cec.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_cec.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_comp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_comp.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_comp.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_cortex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_cortex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_crc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_crc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_crc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_crc_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_crc_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_crc_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_dac.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_dac.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_dac.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_dac_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_dac_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_dac_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_dma.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_dma.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_exti.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_exti.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_exti.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_flash.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_flash.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_flash_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_flash_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_flash_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_gpio.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_gpio.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_i2c.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_i2c.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_i2c_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_i2c_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_i2c_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_i2s.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_i2s.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_i2s.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_irda.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_irda.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_irda.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_iwdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_iwdg.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_iwdg.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_pcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_pcd.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_pcd.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_pcd_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_pcd_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_pcd_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_pwr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_pwr.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_pwr_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_pwr_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_pwr_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_rcc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_rcc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_rcc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_rcc_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_rcc_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_rcc_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_rtc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_rtc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_rtc_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_rtc_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_rtc_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_smartcard.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_smartcard.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_smartcard.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_smartcard_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_smartcard_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_smartcard_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_smbus.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_smbus.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_smbus.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_spi.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_spi.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_spi_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_spi_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_spi_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_tim.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_tim.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_tim.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_tim_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_tim_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_tsc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_tsc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_tsc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_uart.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_uart.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_uart_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_uart_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_uart_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_usart.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_usart.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_usart_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_usart_ex.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_usart_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_wwdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_hal_wwdg.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_hal_wwdg.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_adc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_adc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_comp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_comp.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_comp.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_crc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_crc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_crc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_crs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_crs.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_crs.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_dac.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_dac.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_dac.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_dma.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_dma.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_exti.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_exti.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_exti.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_gpio.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_i2c.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_i2c.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_pwr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_pwr.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_rcc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_rcc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_rcc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_rtc.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_rtc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_spi.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_spi.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_tim.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_tim.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_tim.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_usart.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_usart.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_usb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_usb.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_usb.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_ll_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\hal\stm32f0xx_ll_utils.c</FilePath>
+              <FilePath>src\core\hal\stm32f0xx_ll_utils.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\core\stm32f0xx_it.c</FilePath>
+              <FilePath>src\core\stm32f0xx_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -701,17 +701,17 @@
             <File>
               <FileName>button.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\button.c</FilePath>
+              <FilePath>src\sys\button.c</FilePath>
             </File>
             <File>
               <FileName>panic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\panic.c</FilePath>
+              <FilePath>src\sys\panic.c</FilePath>
             </File>
             <File>
               <FileName>scheduler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\scheduler.c</FilePath>
+              <FilePath>src\sys\scheduler.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -721,12 +721,12 @@
             <File>
               <FileName>ch9329.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\hardware\ch9329.c</FilePath>
+              <FilePath>src\sys\hardware\ch9329.c</FilePath>
             </File>
             <File>
               <FileName>norflash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\hardware\norflash.c</FilePath>
+              <FilePath>src\sys\hardware\norflash.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -736,7 +736,7 @@
             <File>
               <FileName>app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\app\app.c</FilePath>
+              <FilePath>src\app\app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -746,25 +746,22 @@
             <File>
               <FileName>unlock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\app\layout\main\unlock.c</FilePath>
+              <FilePath>src\app\layout\main\unlock.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>UI/WIDGETS</GroupName>
-        </Group>
-        <Group>
-          <GroupName>SYS/CRYPTO</GroupName>
           <Files>
             <File>
-              <FileName>encrypt.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\src\sys\crypto\aes\encrypt.s</FilePath>
+              <FileName>stack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\ui\widgets\stack.c</FilePath>
             </File>
             <File>
-              <FileName>lookup_tables.c</FileName>
+              <FileName>menu.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\crypto\aes\lookup_tables.c</FilePath>
+              <FilePath>.\src\ui\widgets\menu.c</FilePath>
             </File>
           </Files>
         </Group>

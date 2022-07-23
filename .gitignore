@@ -1,31 +1,16 @@
 # vscode files
 .vscode/
-.eide/log
 
 # project out
-build
+build/
 
 # eide template
 *.ept
 *.eide-template
+.eide/log
 
 # keil objects
-keil/*.o
-keil/*.d
-keil/*.crf
-keil/*.dep
-keil/*.lst
-keil/*.scvd
-keil/*.htm
-keil/*.hex
-keil/*.lnp
-keil/*.map
-keil/*.sct
-keil/*.iex
-keil/*.axf
-keil/*.Bak
-keil/*.Bak
-keil/DebugConfig
-keil/RTE
-keil/*.uvguix.*
-keil/*.uvoptx
+DebugConfig/
+RTE/
+*.uvguix.*
+*.uvoptx
