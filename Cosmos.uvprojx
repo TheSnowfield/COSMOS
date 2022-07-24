@@ -724,9 +724,9 @@
               <FilePath>src\sys\hardware\ch9329.c</FilePath>
             </File>
             <File>
-              <FileName>norflash.c</FileName>
+              <FileName>w25qx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>src\sys\hardware\norflash.c</FilePath>
+              <FilePath>.\src\sys\hardware\w25qx.c</FilePath>
             </File>
           </Files>
         </Group>

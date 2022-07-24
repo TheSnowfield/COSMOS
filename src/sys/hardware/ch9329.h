@@ -2,12 +2,8 @@
 #define __SYS_HARDWARE_CH9329_H
 
 #include <stdbool.h>
+#include <sys/status.h>
 #define packed __attribute__((packed))
-
-typedef enum {
-  ok,
-  error
-} ch9329_stat_t;
 
 typedef enum {
   v1_0 = 0x30,
@@ -256,25 +252,25 @@ typedef struct {
 
 void ch9329_init();
 
-ch9329_stat_t ch9329_get_info(ch9329_chip_info_t **info);
+status_t ch9329_get_info(ch9329_chip_info_t **info);
 
 // ch9329_stat_t ch9329_send_kb_media_data(uint8_t key1, uint8_t key2);
 // void ch9329_send_ms_abs_data();
 // void ch9329_send_ms_rel_data();
-ch9329_stat_t ch9329_send_my_hid_data(char* data, uint8_t length); //size:0~64
+status_t ch9329_send_my_hid_data(char* data, uint8_t length); //size:0~64
 // void ch9329_read_my_hid_data();
 
-ch9329_stat_t ch9329_get_para_cfg(ch9329_para_cfg_t** config);
-ch9329_stat_t ch9329_set_para_cfg(ch9329_para_cfg_t* config);
+status_t ch9329_get_para_cfg(ch9329_para_cfg_t** config);
+status_t ch9329_set_para_cfg(ch9329_para_cfg_t* config);
 
-ch9329_stat_t ch9329_get_usb_string(ch9329_usbstr_t type, char** str, uint8_t *length);
-ch9329_stat_t ch9329_set_usb_string(char* data, uint8_t length);
+status_t ch9329_get_usb_string(ch9329_usbstr_t type, char** str, uint8_t *length);
+status_t ch9329_set_usb_string(char* data, uint8_t length);
 
-ch9329_stat_t ch9329_set_default_cfg();
+status_t ch9329_set_default_cfg();
 
-ch9329_stat_t ch9329_send_keys(ch9329_keystat_t *stat);
-ch9329_stat_t ch9329_release_keys();
+status_t ch9329_send_keys(ch9329_keystat_t *stat);
+status_t ch9329_release_keys();
 
-ch9329_stat_t ch9329_reset();
+status_t ch9329_reset();
 
 #endif /* __SYS_HARDWARE_CH9329_H */

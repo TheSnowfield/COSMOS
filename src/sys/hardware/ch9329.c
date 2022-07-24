@@ -17,7 +17,7 @@ void ch9329_init() {
   HAL_GPIO_Init(USART_PORT, &port_usart1);
 	HAL_UART_Init(&usart1);
 
-  // ch9329_stat_t stat;
+  // status_t stat;
   // ch9329_para_cfg_t* paracfg;
   // if(ch9329_get_para_cfg(&paracfg) == ok) {
   //   int x = paracfg->address;
@@ -60,7 +60,7 @@ void _packet_update_checksum(packet_t *packet) {
   packet->buffer[packet->length] = checksum;
 }
 
-ch9329_stat_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
+status_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
                             void** recvdata, uint8_t *recvlen) {
 
   // init a packet
@@ -93,21 +93,21 @@ ch9329_stat_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
   return ok;
 }
 
-ch9329_stat_t ch9329_get_info(ch9329_chip_info_t** info) {
+status_t ch9329_get_info(ch9329_chip_info_t** info) {
   return ch9329_send_packet(CH9329_CMD_GET_INFO, NULL, 0, (void **)info, NULL);
 }
 
-ch9329_stat_t ch9329_get_para_cfg(ch9329_para_cfg_t** config) {
+status_t ch9329_get_para_cfg(ch9329_para_cfg_t** config) {
   return ch9329_send_packet(CH9329_CMD_GET_PARA_CFG, NULL, 0, (void **)config, NULL);
 }
 
-ch9329_stat_t ch9329_set_para_cfg(ch9329_para_cfg_t* config) {
+status_t ch9329_set_para_cfg(ch9329_para_cfg_t* config) {
   return ch9329_send_packet(CH9329_CMD_SET_PARA_CFG, NULL, 0, NULL, NULL);
 }
 
-ch9329_stat_t ch9329_get_usb_string(ch9329_usbstr_t type, char** str, uint8_t *length) {
+status_t ch9329_get_usb_string(ch9329_usbstr_t type, char** str, uint8_t *length) {
 
-  ch9329_stat_t ret = ch9329_send_packet(CH9329_CMD_GET_USB_STRING, (uint8_t *)&type, 1, (void **)str, length);
+  status_t ret = ch9329_send_packet(CH9329_CMD_GET_USB_STRING, (uint8_t *)&type, 1, (void **)str, length);
   if(ret != ok) return ret;
   if(*length == 0) return error;
 
@@ -120,24 +120,24 @@ ch9329_stat_t ch9329_get_usb_string(ch9329_usbstr_t type, char** str, uint8_t *l
   return ret;
 }
 
-ch9329_stat_t ch9329_set_default_cfg() {
+status_t ch9329_set_default_cfg() {
   return ch9329_send_packet(CH9329_CMD_SET_DEFAULT_CFG, NULL, 0, NULL, NULL);
 }
 
-ch9329_stat_t ch9329_reset() {
+status_t ch9329_reset() {
   return ch9329_send_packet(CH9329_CMD_RESET, NULL, 0, NULL, NULL);
 }
 
-ch9329_stat_t ch9329_send_keys(ch9329_keystat_t *stat) {
+status_t ch9329_send_keys(ch9329_keystat_t *stat) {
   stat->zero = 0;
   return ch9329_send_packet(CH9329_CMD_SEND_KB_GENERAL_DATA, (uint8_t *)stat, sizeof(ch9329_keystat_t), NULL, NULL);
 }
 
-ch9329_stat_t ch9329_release_keys() {
+status_t ch9329_release_keys() {
   return ch9329_send_keys(&(ch9329_keystat_t) {});
 }
 
-// ch9329_stat_t ch9329_set_usb_string(char* data, uint8_t length);
+// status_t ch9329_set_usb_string(char* data, uint8_t length);
 
 // void ch9329_send_keys(uint8_t *data) {
 //   uint8_t recvlen;
