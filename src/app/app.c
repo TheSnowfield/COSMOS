@@ -7,7 +7,7 @@
 #include <sys/button.h>
 
 #include <hardware/ch9329.h>
-#include <hardware/norflash.h>
+#include <hardware/w25qx.h>
 
 // #include <widgets/stack.h>
 // #include <widgets/statbar.h>
@@ -20,5 +20,5 @@
 
 void appmain() {
   ch9329_init();
-  norflash_init();
+  w25qx_init();
 }
