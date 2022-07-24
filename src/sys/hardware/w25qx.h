@@ -1,8 +1,6 @@
 #ifndef __SYS_HARDWARE_NORFLASH_H
 #define __SYS_HARDWARE_NORFLASH_H
 
-#include <sys/status.h>
-
 typedef enum {
   w25q64jvssiq
 } flash_type_t;
@@ -25,7 +23,7 @@ typedef struct {
 
 typedef struct {
   uint8_t dummy [4];
-  uint8_t unique_sn[8];
+  uint8_t unique_sn [8];
 } w25qx_unique_id_t;
 
 typedef enum {

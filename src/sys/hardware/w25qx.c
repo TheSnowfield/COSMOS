@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include <sys/panic.h>
+#include <sys/status.h>
 
 #define __NORFLASH_INTERNAL
 #include <hardware/w25qx.h>
