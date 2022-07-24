@@ -7,3 +7,7 @@ void panic() {
 
   for(;;);
 }
+
+// void assert(bool condition, const char* reason) {
+
+// }
