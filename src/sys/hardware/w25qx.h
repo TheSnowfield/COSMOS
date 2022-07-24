@@ -1,11 +1,44 @@
 #ifndef __SYS_HARDWARE_NORFLASH_H
 #define __SYS_HARDWARE_NORFLASH_H
 
+#include <sys/status.h>
+
 typedef enum {
   w25q64jvssiq
 } flash_type_t;
 
+typedef struct {
+  uint8_t dummy [3];
+  uint8_t manufacturer_id;
+  uint8_t device_id;
+} w25qx_manufacturer_id_t;
+
+typedef struct {
+  uint8_t manufacturer_id;
+  uint8_t memory_type;
+  uint8_t capacity;
+} w25qx_jedec_id_t;
+
+typedef struct {
+
+} w25qx_register1_t;
+
+typedef struct {
+  uint8_t dummy [4];
+  uint8_t unique_sn[8];
+} w25qx_unique_id_t;
+
+typedef enum {
+  erase_sector,
+  erase_block32,
+  erase_block64,
+  erase_chip,
+} erase_type_t;
+
 #ifdef __NORFLASH_INTERNAL
+
+#define W25QX_TIMEOUT 1000
+
 #define W25QX_CMD_WRITE_ENABLE       0x06
 #define W25QX_CMD_VOLATILE_WRITE_EN  0x50
 #define W25QX_CMD_WRITE_DISABLE      0x04
@@ -48,9 +81,92 @@ typedef enum {
 
 #endif
 
+/**
+ * @brief Init flash device
+ */
 void w25qx_init();
-void w25qx_read(uint32_t address, uint8_t *data, uint32_t length);
-void w25qx_write(uint32_t address, uint8_t *data, uint32_t length);
-void w25qx_erase(uint32_t address, uint32_t length);
+
+/**
+ * @brief Get the manufacturer ID of the flash.
+ *
+ * @param id w25qx_manufacturer_id_t* pointer
+ * @return if success return ok
+ */
+status_t w25qx_get_manufacturer_id(w25qx_manufacturer_id_t *id);
+
+/**
+ * @brief Get the JEDEC ID of the flash.
+ *
+ * @param id w25qx_jedec_id_t* pointer
+ * @return if success return ok
+ */
+status_t w25qx_get_jedec_id(w25qx_jedec_id_t *id);
+
+/**
+ * @brief Get the unique ID of the flash.
+ *
+ * @param id w25qx_unique_id_t* pointer
+ * @return if success return ok
+ */
+status_t w25qx_get_unique_id(w25qx_unique_id_t *id);
+
+/**
+ * @brief Enable write
+ *
+ * @return if success return ok
+ */
+status_t w25qx_write_enable();
+
+/**
+ * @brief Disable write
+ *
+ * @return if success return ok
+ */
+status_t w25qx_write_disable();
+
+/**
+ * @brief Global lock
+ *
+ * @return if success return ok
+ */
+status_t w25qx_global_lock();
+
+/**
+ * @brief Global unlock
+ *
+ * @return if success return ok
+ */
+status_t w25qx_global_unlock();
+
+/**
+ * @brief Read flash data
+ *
+ * @param address 24bit access address
+ * @param data data pointer
+ * @param length data length
+ * @param fastread if true, use fast read mode
+ * @return if success return ok
+ */
+status_t w25qx_read_data(uint32_t address, void* data, uint32_t length, bool fastread);
+
+/**
+ * @brief Write flash data
+ *
+ * @param address 24bit access address
+ * @param data data pointer
+ * @param length data length
+ * @return if success return ok
+ */
+status_t w25qx_write_data(uint32_t address, void* data, uint32_t length);
+
+/**
+ * @brief Erase flash. Write enable/disable instructions
+ *        and automatic write disable after erase or program
+ *
+ * @param type erase type
+ * @param address 24bit access address
+ * @return if success return ok
+ */
+status_t w25qx_erase(erase_type_t type, uint32_t address);
 
 #endif /* __SYS_HARDWARE_NORFLASH_H */
