@@ -15,3 +15,10 @@ RTE/
 *.uvguix.*
 *.uvoptx
 *.scvd
+
+# ad files
+hw/History/
+hw/Project Logs*
+hw/Project Outputs*
+hw/Schematics/__Previews/
+*.sldprt

@@ -69,28 +69,26 @@ typedef struct {
 } ch1115_initcmd_t;
 
 ch1115_initcmd_t ch1115_init_cmd[] = {
-
-  // Turn display off first
   { {0x00, CH1115_REG_DISPLAY_OFF}, 2, 100 },
   { {0x00, CH1115_REG_SET_COLADD_LSB}, 2, 10 },
   { {0x00, CH1115_REG_SET_COLADD_MSB}, 2, 10 },
   { {0x00, CH1115_REG_SET_DISPLAY_START_LINE}, 2, 10 },
   { {0x00, CH1115_REG_SET_PAGEADD}, 2, 10 },
-  { {0x00, 0x81, 0x4D}, 3, 10 },
-  { {0x00, 0x82, 0x00}, 3, 10 },
+  { {0x00, CH1115_REG_CONTRAST_CONTROL, 0x4D}, 3, 10 },
+  { {0x00, CH1115_REG_IREF_REG, 0x00}, 3, 10 },
   { {0x00, 0xA1}, 2, 10 },
-  { {0x00, 0xA2}, 2, 10 },
+  { {0x00, CH1115_REG_SEG_SET_PADS}, 2, 10 },
   { {0x00, 0xA4}, 2, 10 },
-  { {0x00, 0xA6}, 2, 10 },
+  { {0x00, CH1115_REG_DISPLAY_NORMAL}, 2, 10 },
   { {0x00, 0xA8, 0x1F}, 3, 10 },
   { {0x00, 0xC8}, 2, 10 },
-  { {0x00, 0xD3, 0x10}, 3, 10 },
-  { {0x00, 0xD5, 0xB1}, 3, 10 },
-  { {0x00, 0xD9, 0x62}, 3, 10 },
-  { {0x00, 0xDB, 0x3F}, 3, 10 },
+  { {0x00, CH1115_REG_OFFSET_MODE_SET, 0x10}, 3, 10 },
+  { {0x00, CH1115_REG_OSC_FREQ_MODE_SET, 0xB1}, 3, 10 },
+  { {0x00, CH1115_REG_PRECHARGE_MODE_SET, 0x62}, 3, 10 },
+  { {0x00, CH1115_REG_COM_LEVEL_MODE_SET, 0x3F}, 3, 10 },
   { {0x00, 0x32}, 2, 10 },
-  { {0x00, 0xAD, 0x8B}, 3, 10 },
-  { {0x00, 0xAF}, 2, 10 },
+  { {0x00, CH1115_REG_DC_MODE_SET, 0x8B}, 3, 10 },
+  { {0x00, CH1115_REG_DISPLAY_ON}, 2, 10 },
   { {0x00, 0xE3}, 2, 150 },
 };
 
