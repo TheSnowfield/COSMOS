@@ -11,11 +11,11 @@ void ch9329_init() {
 
   HAL_GPIO_Init(USART_PORT, &port_usart1_ctl);
   //HAL_GPIO_WritePin(USART_PORT, USART_PIN_CTL_RST, GPIO_PIN_SET);
-	//HAL_GPIO_WritePin(USART_PORT, USART_PIN_CTL_RST, GPIO_PIN_RESET);
+  //HAL_GPIO_WritePin(USART_PORT, USART_PIN_CTL_RST, GPIO_PIN_RESET);
 
-	__HAL_RCC_USART1_CLK_ENABLE();
+  __HAL_RCC_USART1_CLK_ENABLE();
   HAL_GPIO_Init(USART_PORT, &port_usart1);
-	HAL_UART_Init(&usart1);
+  HAL_UART_Init(&usart1);
 
   // status_t stat;
   // ch9329_para_cfg_t* paracfg;
@@ -23,14 +23,14 @@ void ch9329_init() {
   //   int x = paracfg->address;
   //   // printf("CH9329 chip info: %s\n", chipinfo->usb_connected);
   // }
-	
-	// char* usbstr = NULL;
-	// uint8_t length = 0;
-	// if(ch9329_get_usb_string(manufacturer, &usbstr, &length)) {
-	// usbstr[0] = '1';
-	
-	// }
-	
+
+  // char* usbstr = NULL;
+  // uint8_t length = 0;
+  // if(ch9329_get_usb_string(manufacturer, &usbstr, &length)) {
+  // usbstr[0] = '1';
+    
+  // }
+    
 }
 
 void _packet_init(packet_t *packet, uint8_t address) {
