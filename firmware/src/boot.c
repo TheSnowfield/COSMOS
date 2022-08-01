@@ -1,6 +1,6 @@
 #include <hardware/config.h>
 #include <sys/scheduler.h>
-// #include <sys/display.h>
+#include <sys/display.h>
 #include <sys/panic.h>
 #include <app/app.h>
 
@@ -79,11 +79,10 @@ int main() {
     scheduler_init();
 
     // Enable display
-    // display_light(true);
-    // display_init(false); {
-    //   HAL_Delay(500); // avoid display tearing
-    //   display_light(false);
-    // }
+    display_init(false); {
+      HAL_Delay(100);
+      display_light(true);
+    }
   }
 
   // Call appmain

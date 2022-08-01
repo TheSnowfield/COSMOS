@@ -82,9 +82,15 @@ static GPIO_InitTypeDef port_i2c1 = {
   .Alternate = GPIO_AF4_I2C1
 };
 
+static GPIO_InitTypeDef port_i2c1_ctl = {
+  .Pin = I2C1_PIN_CTL_RST,
+  .Mode = GPIO_MODE_OUTPUT_PP,
+  .Speed = GPIO_SPEED_FREQ_HIGH
+};
+
 static I2C_HandleTypeDef i2c1 = {
   .Instance = I2C1,
-  .Init.Timing = 0x2000090E,
+  .Init.Timing = 0x00000001,
   .Init.OwnAddress1 = 0,
   .Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT,
   .Init.DualAddressMode = I2C_DUALADDRESS_DISABLE,
@@ -92,6 +98,17 @@ static I2C_HandleTypeDef i2c1 = {
   .Init.OwnAddress2Masks = I2C_OA2_NOMASK,
   .Init.GeneralCallMode = I2C_GENERALCALL_DISABLE,
   .Init.NoStretchMode = I2C_NOSTRETCH_DISABLE
+};
+
+static DMA_HandleTypeDef dma_i2c1 = {
+  .Instance = DMA1_Channel2,
+  .Init.Direction = DMA_MEMORY_TO_PERIPH,
+  .Init.PeriphInc = DMA_PINC_DISABLE,
+  .Init.MemInc = DMA_MINC_ENABLE,
+  .Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE,
+  .Init.MemDataAlignment = DMA_PDATAALIGN_BYTE,
+  .Init.Mode = DMA_NORMAL,
+  .Init.Priority = DMA_PRIORITY_HIGH
 };
 
 // SPI1 is used for the spi nor flash

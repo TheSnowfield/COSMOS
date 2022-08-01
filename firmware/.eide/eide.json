@@ -1,5 +1,5 @@
 {
-  "name": "Cosmos",
+  "name": "firmware",
   "type": "ARM",
   "mode": "Debug",
   "toolchain": "AC6",
@@ -162,7 +162,10 @@
     "src/third/cortexm-AES/aes/target/CM7_DSPsBOX",
     "src/third/cortexm-AES/aes/target/CM7_sBOX",
     "src/third/cortexm-AES/aes/target/CM0_sBOX",
-    "src/sys/crypto"
+    "src/third/u8g2/cppsrc",
+    "src/third/u8g2/tools",
+    "src/third/u8g2/sys",
+    "src/third/u8g2/doc"
   ],
   "outDir": "build",
   "deviceName": null,

@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include <sys/tick.h>
-// #include <sys/display.h>
+#include <sys/display.h>
 #include <sys/scheduler.h>
 #include <sys/button.h>
 
@@ -22,5 +22,4 @@
 void appmain() {
   ch9329_init();
   w25qx_init();
-  ch1115_init();
 }
