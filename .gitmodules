@@ -1,3 +1,6 @@
 [submodule "firmware/src/third/cortexm-AES"]
 	path = firmware/src/third/cortexm-AES
 	url = https://github.com/jnk0le/cortexm-AES
+[submodule "firmware/src/third/u8g2"]
+	path = firmware/src/third/u8g2
+	url = https://github.com/olikraus/u8g2

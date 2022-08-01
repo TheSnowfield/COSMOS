@@ -7,7 +7,7 @@ build/
 # eide template
 *.ept
 *.eide-template
-.eide/log
+.eide/log/
 
 # keil objects
 DebugConfig/
