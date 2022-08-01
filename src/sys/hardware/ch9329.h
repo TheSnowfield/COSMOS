@@ -113,7 +113,7 @@ typedef enum {
   key_0 = 0x27,
   key_minus = 0x2D,
   key_equal = 0x2E,
-  key_back_space = 0x2A,
+  key_backspace = 0x2A,
   key_tab = 0x2B,
   key_q = 0x14,
   key_w = 0x1A,

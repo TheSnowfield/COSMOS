@@ -15,7 +15,8 @@
             "./src/core/include",
             "./src/core/hal/include",
             "./src/app",
-            "./src/ui"
+            "./src/ui",
+            "./src/third/cortexm-AES"
           ],
           "libList": [],
           "sourceDirList": [],
@@ -160,7 +161,8 @@
     "src/third/cortexm-AES/aes/target/CM7_1T_modes",
     "src/third/cortexm-AES/aes/target/CM7_DSPsBOX",
     "src/third/cortexm-AES/aes/target/CM7_sBOX",
-    "src/third/cortexm-AES/aes/target/CM0_sBOX"
+    "src/third/cortexm-AES/aes/target/CM0_sBOX",
+    "src/sys/crypto"
   ],
   "outDir": "build",
   "deviceName": null,

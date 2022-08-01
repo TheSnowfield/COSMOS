@@ -8,6 +8,7 @@
 
 #include <hardware/ch9329.h>
 #include <hardware/w25qx.h>
+#include <hardware/ch1115.h>
 
 // #include <widgets/stack.h>
 // #include <widgets/statbar.h>
@@ -21,4 +22,5 @@
 void appmain() {
   ch9329_init();
   w25qx_init();
+  ch1115_init();
 }

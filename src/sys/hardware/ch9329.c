@@ -72,7 +72,7 @@ status_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
 
   // send data
   HAL_UART_Transmit(&usart1, (uint8_t *)&packet, PACKET_SIZE(&packet), 200);
-  HAL_UART_Receive(&usart1, (uint8_t *)&packet, MAX_BUFFER_SIZE, 50);
+  HAL_UART_Receive(&usart1, (uint8_t *)&packet, MAX_BUFFER_SIZE, 100);
 
   // check length
   if(packet.length > 64) return error;

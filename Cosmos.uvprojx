@@ -728,6 +728,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\sys\hardware\w25qx.c</FilePath>
             </File>
+            <File>
+              <FileName>ch1115.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\sys\hardware\ch1115.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
