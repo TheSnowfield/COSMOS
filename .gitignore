@@ -17,8 +17,8 @@ RTE/
 *.scvd
 
 # ad files
-hw/History/
-hw/Project Logs*
-hw/Project Outputs*
-hw/Schematics/__Previews/
+hardware/History/
+hardware/Project Logs*
+hardware/Project Outputs*
+hardware/Schematics/__Previews/
 *.sldprt
