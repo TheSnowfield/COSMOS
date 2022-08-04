@@ -135,7 +135,9 @@ status_t ch1115_light_on();
 status_t ch1115_light_off();
 
 status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color);
-status_t ch1115_set_column(uint8_t page, uint8_t col, ch1115_color_t color);
+status_t ch1115_set_pixel_column(uint8_t bits);
 status_t ch1115_clear(ch1115_color_t color);
+status_t ch1115_set_page(uint8_t page);
+status_t ch1115_set_column(uint8_t column);
 
 #endif /* _SYS_HARDWARE_CH1115_H */

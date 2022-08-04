@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define Y2PAGE(y) (y / 8)
+#define X2COLUMN_L(x) (x & 0x00FF)
+#define X2COLUMN_H(x) (x >> 4)
+
 status_t ch1115_write_cmd(uint8_t cmd, uint8_t* args, uint8_t len) {
   uint8_t buffer[Ch1115_MAX_ARGLEN] = {0}; {
     if(len > Ch1115_MAX_ARGLEN) return error;
@@ -80,9 +84,6 @@ status_t ch1115_light_off() {
   return ch1115_write_cmd(CH1115_REG_DISPLAY_OFF, NULL, 0);
 }
 
-#define Y2PAGE(y) (y / 8)
-#define X2COLUMN_L(x) (x & 0x00FF)
-#define X2COLUMN_H(x) (x >> 4)
 status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color) {
   ch1115_write_cmd(CH1115_REG_SET_PAGEADD + Y2PAGE(y), NULL, 0);
   ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + X2COLUMN_L(x), NULL, 0);
@@ -90,21 +91,28 @@ status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color) {
   HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, (uint8_t[]){ 0x40, ~(color ^ (1 << (y & 0x0F))) }, 2, HAL_MAX_DELAY);
 }
 
-status_t ch1115_set_column(uint8_t page, uint8_t col, ch1115_color_t color) {
+status_t ch1115_set_pixel_column(uint8_t bits) {
+  HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, (uint8_t[]){ 0x40, bits }, 2, HAL_MAX_DELAY);
+}
+
+status_t ch1115_set_page(uint8_t page) {
   ch1115_write_cmd(CH1115_REG_SET_PAGEADD + page, NULL, 0);
-  ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + X2COLUMN_L(col), NULL, 0);
-  ch1115_write_cmd(CH1115_REG_SET_COLADD_MSB + X2COLUMN_H(col), NULL, 0);
-  HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, (uint8_t[]){ 0x40, color }, 2, HAL_MAX_DELAY);
+}
+
+status_t ch1115_set_column(uint8_t column) {
+  ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + X2COLUMN_L(column), NULL, 0);
+  ch1115_write_cmd(CH1115_REG_SET_COLADD_MSB + X2COLUMN_H(column), NULL, 0);
 }
 
 status_t ch1115_clear(ch1115_color_t color) {
 
+  uint8_t clr[] = { 0x40, color, color, color, color, color, color, color, color };
+
   for(uint8_t page = 0; page < CH1115_HEIGHT_PAGE; ++page) {
-    ch1115_write_cmd(CH1115_REG_SET_PAGEADD + page, NULL, 0);
-    ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + 0, NULL, 0);
-    ch1115_write_cmd(CH1115_REG_SET_COLADD_MSB + 0, NULL, 0);
-    for(uint8_t col = 0; col < CH1115_WIDTH; ++col) {
-      HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, (uint8_t[]){ 0x40, color }, 2, HAL_MAX_DELAY);
+    ch1115_set_page(page);
+    ch1115_set_column(0);
+    for(uint8_t column = 0; column < CH1115_WIDTH / 8; ++column) {
+      HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, clr, sizeof(clr), HAL_MAX_DELAY);
     }
   }
 

@@ -80,7 +80,7 @@ int main() {
 
     // Enable display
     display_init(false); {
-      HAL_Delay(100);
+      display_clear(clr_black);
       display_light(true);
     }
   }

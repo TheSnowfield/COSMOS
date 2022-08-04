@@ -107,18 +107,22 @@ uint16_t imgw, uint16_t imgh, const uint8_t *img) {
 //   }
 // }
 
-// void display_bitblt(uint8_t dstx, uint8_t dsty,
-//                     uint8_t srcx, uint8_t srcy, uint8_t srcw, uint8_t srch,
-//                     const uint8_t* data) {
+void display_bitblt(uint8_t dstx, uint8_t dsty,
+                    uint8_t srcx, uint8_t srcy, uint8_t srcw, uint8_t srch,
+                    const uint8_t* data) {
 
-//   display_bitblt_area(dstx, dsty, srcx, srcy, srcw, srch, srcw, data);
-// }
+  display_bitblt_area(dstx, dsty, srcx, srcy, srcw, srch, srcw, data);
+}
 
-// void display_bitblt_area(uint8_t dstx, uint8_t dsty,
-//                     uint16_t srcx, uint16_t srcy, uint16_t srcw, uint16_t srch,
-//                     uint16_t width, const uint8_t* data) {
+void display_bitblt_area(uint8_t dstx, uint8_t dsty,
+                    uint16_t srcx, uint16_t srcy, uint16_t srcw, uint16_t srch,
+                    uint16_t width, const uint8_t* data) {
 
-//   pixel_t* pdata = (pixel_t *)data;
-//   for (int i = dsty, j = srcy; j < srch; ++i, ++j)
-//     memcpy(&gbuffer[DISPLAY_W * i + dstx], &pdata[width * j + srcx], srcw * sizeof(pixel_t));
-// }
+
+  for(uint8_t page = 0; page < CH1115_HEIGHT_PAGE; ++page) {
+    ch1115_set_page(page);
+    ch1115_set_column(0);
+    for(uint8_t column = 0; column < CH1115_WIDTH; ++column)
+      ch1115_set_pixel_column(data[(3-page) * CH1115_WIDTH + column]);
+  }
+}

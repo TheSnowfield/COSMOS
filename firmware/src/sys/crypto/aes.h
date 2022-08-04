@@ -1,5 +1,5 @@
-#ifndef __SYS_CRYPTO_AES_H
-#define __SYS_CRYPTO_AES_H
+#ifndef _SYS_CRYPTO_AES_H
+#define _SYS_CRYPTO_AES_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -22,4 +22,4 @@ void crypto_aes256cbc_encrypt(uint8_t *key, uint8_t *iv, uint8_t *data_in, uint8
  */
 void crypto_aes256cbc_decrypt(uint8_t *key, uint8_t *iv, uint8_t *data_in, uint8_t *data_out, size_t len);
 
-#endif /* __SYS_CRYPTO_AES_H */
+#endif /* _SYS_CRYPTO_AES_H */
