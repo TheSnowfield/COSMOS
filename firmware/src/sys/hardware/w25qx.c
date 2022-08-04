@@ -149,8 +149,13 @@ status_t w25qx_fastread(uint32_t address, void* data, uint32_t length) {
 status_t w25qx_write_data(uint32_t address, void* data, uint32_t length) {
   status_t ret;
   
-  // only allow write 256 bytes at a time
-  if(length != 256) return error;
+  // only allow write more than 256 bytes at a time
+  if(length < 256) {
+    uint8_t padding[256];
+    memcpy(padding, data, length);
+    data = padding;
+    length = 256;
+  }
 
   // send command first
   ret = w25qx_sendrecv(W25QX_CMD_PAGE_PROGRAM, &address, 3, false);
