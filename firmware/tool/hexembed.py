@@ -2,6 +2,7 @@
 
 import io
 import sys
+from lib.cwriter import cwriter
 
 def main():
 
@@ -11,41 +12,17 @@ def main():
     sys.exit(1)
 
   # Read the file
-  file = readfile(sys.argv[1])
-  output = open(sys.argv[2], "wt")
-
-  fname = filename(sys.argv[1])
-  cfname = fname.replace(".", "_")
-  cmacro = cfname.upper()
+  fp = open(sys.argv[1], "rb")
+  fp.seek(io.SEEK_SET, 0)
+  file = fp.read()
+  fp.close()
 
   # Write the file
-  output.write("#ifndef _EMBEDDED_%s_H\n" % cmacro)
-  output.write("#define _EMBEDDED_%s_H\n\n" % cmacro)
-  output.write("/* Embedded file: %s */\n" % fname)
-  output.write("const unsigned char %s[] = {\n" % cfname)
-  for i in range(0, len(file), 16):
-    output.write("\t")
-    for j in range(0, 16):
-      if i + j < len(file):
-        output.write("0x%02x, " % ord(file[i + j]))
-      else:
-        output.write("0x00, ")
-    output.write("\n")
-  output.write("};\n\n")
-  output.write("#endif\n")
-  output.close()
-
-def readfile(file):
-  fp = open(file, "r")
-  fp.seek(io.SEEK_SET, 0)
-
-  bin = fp.read()
-  fp.close()
-  return bin
-
-def filename(file: str):
-  split = file.replace("\\", "/").split("/")
-  return split[len(split) - 1]
+  writer = cwriter()
+  writer.open(sys.argv[1], sys.argv[2])
+  writer.append(file)
+  writer.writeall()
+  writer.close()
 
 if __name__ == "__main__":
   main()
