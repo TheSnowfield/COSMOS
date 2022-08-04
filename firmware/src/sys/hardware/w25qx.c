@@ -116,28 +116,30 @@ status_t w25qx_global_unlock() {
   return w25qx_sendrecv(W25QX_CMD_GLOBAL_BLOCK_UNLOCK, NULL, 0, true);
 }
 
-status_t w25qx_read_data(uint32_t address, void* data,
-                         uint32_t length, bool fastread) {
+status_t w25qx_read_data(uint32_t address, void* data, uint32_t length) {
   status_t ret;
   
-  if(fastread) {
+  // send command first
+  ret = w25qx_sendrecv(W25QX_CMD_READ_DATA, &address, 3, false);
+  if(ret != ok) return ret;
 
-    // align length to multiple of 2
-    length ^= length & 1;
+  // send dummy clock and receive data
+  ret = w25qx_sendrecv(0, data, length, true);
+  return ret;
+}
 
-    // remove high 8 bit from address
-    address = (address << 8) >> 8;
+status_t w25qx_fastread(uint32_t address, void* data, uint32_t length) {
+  status_t ret;
 
-    // send command first
-    ret = w25qx_sendrecv(W25QX_CMD_FAST_READ, &address, 4, false);
-    if(ret != ok) return ret;
-  }
+  // align length to multiple of 2
+  length ^= length & 1;
 
-  else {
-    // send command first
-    ret = w25qx_sendrecv(W25QX_CMD_READ_DATA, &address, 3, false);
-    if(ret != ok) return ret;
-  }
+  // remove high 8 bit from address
+  address = (address << 8) >> 8;
+
+  // send command first
+  ret = w25qx_sendrecv(W25QX_CMD_FAST_READ, &address, 4, false);
+  if(ret != ok) return ret;
 
   // send dummy clock and receive data
   ret = w25qx_sendrecv(0, data, length, true);

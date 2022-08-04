@@ -142,10 +142,19 @@ status_t w25qx_global_unlock();
  * @param address 24bit access address
  * @param data data pointer
  * @param length data length
- * @param fastread if true, use fast read mode
  * @return if success return ok
  */
-status_t w25qx_read_data(uint32_t address, void* data, uint32_t length, bool fastread);
+status_t w25qx_read_data(uint32_t address, void* data, uint32_t length);
+
+/**
+ * @brief Read flash data (fast)
+ *
+ * @param address 24bit access address
+ * @param data data pointer
+ * @param length data length
+ * @return if success return ok
+ */
+status_t w25qx_fastread(uint32_t address, void* data, uint32_t length);
 
 /**
  * @brief Write flash data
