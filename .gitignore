@@ -22,3 +22,5 @@ hardware/Project Logs*
 hardware/Project Outputs*
 hardware/Schematics/__Previews/
 *.sldprt
+
+__pycache__/

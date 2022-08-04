@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F030x6</Define>
               <Undefine></Undefine>
-              <IncludePath>src\include;src\core;src\core\include;src\core\hal\include;src\;src\app;src\sys;src\sys\hardware;src\ui</IncludePath>
+              <IncludePath>src\include;src\core;src\core\include;src\core\hal\include;src\;src\app;src\sys;src\sys\hardware;src\ui;src\third\cortexm-AES</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -772,6 +772,46 @@
               <FileName>menu.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\ui\widgets\menu.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SYS/CRYPTO</GroupName>
+          <Files>
+            <File>
+              <FileName>aes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\sys\crypto\aes.c</FilePath>
+            </File>
+            <File>
+              <FileName>CM0_sBOX_AES_128_keyschedule_enc.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\third\cortexm-AES\aes\target\CM0_sBOX\CM0_sBOX_AES_128_keyschedule_enc.S</FilePath>
+            </File>
+            <File>
+              <FileName>CM0_sBOX_AES_192_keyschedule_enc.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\third\cortexm-AES\aes\target\CM0_sBOX\CM0_sBOX_AES_192_keyschedule_enc.S</FilePath>
+            </File>
+            <File>
+              <FileName>CM0_sBOX_AES_256_keyschedule_enc.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\third\cortexm-AES\aes\target\CM0_sBOX\CM0_sBOX_AES_256_keyschedule_enc.S</FilePath>
+            </File>
+            <File>
+              <FileName>CM0_sBOX_AES_decrypt.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\third\cortexm-AES\aes\target\CM0_sBOX\CM0_sBOX_AES_decrypt.S</FilePath>
+            </File>
+            <File>
+              <FileName>CM0_sBOX_AES_encrypt.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\third\cortexm-AES\aes\target\CM0_sBOX\CM0_sBOX_AES_encrypt.S</FilePath>
+            </File>
+            <File>
+              <FileName>lookup_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\third\cortexm-AES\aes\target\lookup_tables.c</FilePath>
             </File>
           </Files>
         </Group>
