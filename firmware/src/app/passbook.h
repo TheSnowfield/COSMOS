@@ -15,14 +15,14 @@ typedef struct {
   void *password;
 } passnote_data_t;
 
-uint32_t get_passnote_cnt();
-void get_passnote_index(uint16_t *note_id_list, uint32_t cnt);
+uint32_t read_passbook_cnt();
+void read_passbook_index(uint16_t *id_list);
 
-uint16_t add_passnote(passnote_meta_t *meta, passnote_data_t *data);
-void set_passnote(uint16_t id, passnote_meta_t *meta, passnote_data_t *data);
-void get_passnote_meta(uint16_t id, passnote_meta_t *meta);
-void get_passnote_data(uint16_t id, passnote_data_t *data);
-void get_passnote_name(uint16_t id, void *name);
-void del_passnote(uint16_t id);
+uint16_t insert_passnote(passnote_meta_t *meta, passnote_data_t *data);
+void update_passnote(uint16_t id, passnote_meta_t *meta, passnote_data_t *data);
+void fetch_passnote_meta(uint16_t id, passnote_meta_t *meta);
+void fetch_passnote_data(uint16_t id, passnote_data_t *data);
+void fetch_passnote_name(uint16_t id, void *name);
+void delete_passnote(uint16_t id);
 
 #endif /* _APP_PASSBOOK */
