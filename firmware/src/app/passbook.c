@@ -73,25 +73,25 @@ void fetch_passnote_data(uint16_t id, passnote_data_t *data) {
   passnote_meta_t meta;
   fetch_passnote_meta(id, &meta);
   uint32_t address = id * FLASH_SECTOR_SIZE + FLASH_PAGE_SIZE;
-  w25qx_read_data(address, data->name, meta->name_len);
+  w25qx_read_data(address, data->name, meta.name_len);
   address += FLASH_PAGE_SIZE;
-  w25qx_read_data(address, data->account, meta->account_len);
+  w25qx_read_data(address, data->account, meta.account_len);
   address += FLASH_PAGE_SIZE * 2;
-  w25qx_read_data(address, data->password, meta->password_len);
+  w25qx_read_data(address, data->password, meta.password_len);
 }
 
 void fetch_passnote_name(uint16_t id, void *name) {
   passnote_meta_t meta;
   fetch_passnote_meta(id, &meta);
   uint32_t address = id * FLASH_SECTOR_SIZE + FLASH_PAGE_SIZE;
-  w25qx_read_data(address, name, meta->name_len);
+  w25qx_read_data(address, name, meta.name_len);
 }
 
 void delete_passnote(uint16_t id) {
   w25qx_erase(erase_sector, id * FLASH_SECTOR_SIZE);
   uint32_t cnt = read_passbook_cnt();
   uint16_t id_list[cnt];
-  read_passbook_index(id_list, cnt);
+  read_passbook_index(id_list);
   for (uint32_t i = 0; i < cnt; i++) {
     if (id_list[i] == id) {
       memcpy(id_list + i, id_list + i + 1, (cnt - i - 1) * 2);

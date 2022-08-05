@@ -1,6 +1,8 @@
 #ifndef __SYS_HARDWARE_NORFLASH_H
 #define __SYS_HARDWARE_NORFLASH_H
 
+#include <sys/status.h>
+
 typedef enum {
   w25q64jvssiq
 } flash_type_t;
