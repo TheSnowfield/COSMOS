@@ -46,6 +46,7 @@ uint16_t insert_passnote(passnote_meta_t *meta, passnote_data_t *data) {
   w25qx_write_data(0, &cnt, 4);
   w25qx_write_data(256, id_list, cnt * 2);
   free(id_list);
+  return id;
 }
 // 1 2 3 5 7
 // 1 2 3 4 5 7
