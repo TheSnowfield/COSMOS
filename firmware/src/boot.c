@@ -69,8 +69,10 @@ int main() {
 
   HAL_Init(); {
 
+#ifndef APP_SIMULATION_MODE_ON
     // Reconfigure RCC
     rcc_reconfigure();
+#endif
 
     // Reconfigure GPIO
     gpio_reconfigure();
@@ -78,14 +80,16 @@ int main() {
     // Init scheduler
     scheduler_init();
 
+#ifndef APP_SIMULATION_MODE_ON
     // Enable display
     display_init(false); {
       display_clear(clr_black);
       display_light(true);
     }
+#endif
   }
 
   // Call appmain
-  appmain();
+  APPMAIN_FUNCTION();
   while(1) scheduler_handler();
 }
