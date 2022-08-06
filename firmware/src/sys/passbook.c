@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <hardware/w25qx.h>
-#include <passbook.h>
+#include <sys/passbook.h>
 
 #define FLASH_TOTAL_SIZE 8 * 1024 * 1024
 #define FLASH_PAGE_SIZE 256
@@ -90,7 +90,7 @@ void fetch_passnote_name(uint16_t id, void *name) {
 void delete_passnote(uint16_t id) {
   w25qx_erase(erase_sector, id * FLASH_SECTOR_SIZE);
   uint32_t cnt = read_passbook_cnt();
-  uint16_t id_list[cnt];
+  uint16_t *id_list = (uint16_t*)malloc(cnt * 2);
   read_passbook_index(id_list);
   for (uint32_t i = 0; i < cnt; i++) {
     if (id_list[i] == id) {
@@ -102,4 +102,5 @@ void delete_passnote(uint16_t id) {
   w25qx_erase(erase_sector, 0);
   w25qx_write_data(0, &cnt, 4);
   w25qx_write_data(256, id_list, cnt * 2);
+  free(id_list);
 }

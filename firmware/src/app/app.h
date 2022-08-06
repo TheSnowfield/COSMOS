@@ -8,5 +8,6 @@ void appmain();
 
 // tests
 void test_aes_appmain();
+void test_passbook_appmain();
 
 #endif /* _APPMAIN_H_ */
