@@ -33,13 +33,22 @@ void test_aes_appmain() {
   uint8_t cbc_tmp[64];
 
   // encrypt test
-  crypto_aes256cbc_encrypt(key_256, cbc_iv, cbc_expected_plaintext, cbc_tmp, 64);
-  if(memcmp(cbc_expected_ciphertext, cbc_tmp, 64) != 0)
-    panic();
+  // crypto_aes256cbc_encrypt(key_256, cbc_iv, cbc_expected_plaintext, cbc_tmp, 64);
+  // if(memcmp(cbc_expected_ciphertext, cbc_tmp, 64) != 0)
+  //   panic();
 
-  // decrypt test
-  crypto_aes256cbc_decrypt(key_256, cbc_iv, cbc_expected_ciphertext, cbc_tmp, 64);
-  if(memcmp(cbc_expected_plaintext, cbc_tmp, 64) != 0)
+  // // decrypt test
+  // crypto_aes256cbc_decrypt(key_256, cbc_iv, cbc_expected_ciphertext, cbc_tmp, 64);
+  // if(memcmp(cbc_expected_plaintext, cbc_tmp, 64) != 0)
+  //   panic();
+
+  // padding test
+  uint8_t cbc_tmp2[64];
+  crypto_aes256cbc_encrypt(key_256, cbc_iv, cbc_expected_plaintext, cbc_tmp, 61);
+  uint32_t read_data_len = crypto_aes256cbc_decrypt(key_256, cbc_iv, cbc_tmp, cbc_tmp2, 64);
+  if (read_data_len != 61)
+    panic();
+  if(memcmp(cbc_expected_plaintext, cbc_tmp2, 61) != 0)
     panic();
 
 }

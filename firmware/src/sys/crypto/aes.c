@@ -1,9 +1,17 @@
 #include <stdint.h>
-#include <stddef.h>
 #include <aes/target/CM0.h>
-#include "aes.h"
 
-void crypto_aes256cbc_encrypt(uint8_t *key, uint8_t *iv, uint8_t *data_in, uint8_t *data_out, size_t len) {
+#define AES128_KEY_ROUNDS 10
+#define AES192_KEY_ROUNDS 12
+#define AES256_KEY_ROUNDS 14
+
+void crypto_aes256cbc_encrypt(uint8_t *key, void *iv, void *data_in, void *data_out, uint32_t len) {
+
+  // add padding
+  uint8_t pad_len = 16 - len % 16;
+  for (uint32_t i = len + (uint32_t)pad_len - 1; i >= len; --i)
+    ((uint8_t*)data_in)[i] = pad_len;
+
   uint8_t round_key[(AES256_KEY_ROUNDS + 1) * 16];
   CM0_sBOX_AES_256_keyschedule_enc(round_key, key);
   uint32_t blocks_cnt = (len + 15) / 16;
@@ -25,7 +33,7 @@ void crypto_aes256cbc_encrypt(uint8_t *key, uint8_t *iv, uint8_t *data_in, uint8
   }
 }
 
-void crypto_aes256cbc_decrypt(uint8_t *key, uint8_t *iv, uint8_t *data_in, uint8_t *data_out, size_t len) {
+uint32_t crypto_aes256cbc_decrypt(uint8_t *key, void *iv, uint8_t *data_in, void *data_out, uint32_t len) {
   uint8_t round_key[(AES256_KEY_ROUNDS + 1) * 16];
   CM0_sBOX_AES_256_keyschedule_enc(round_key, key);
   uint32_t blocks_cnt = (len + 15) / 16;
@@ -44,4 +52,7 @@ void crypto_aes256cbc_decrypt(uint8_t *key, uint8_t *iv, uint8_t *data_in, uint8
     data_out_p += 4;
     data_in += 16;
   }
+
+  // remove padding
+  return len - (uint32_t)(((uint8_t*)data_out)[len - 1]);
 }
