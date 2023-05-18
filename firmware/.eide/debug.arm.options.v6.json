@@ -1,6 +1,21 @@
 {
     "version": 3,
-    "beforeBuildTasks": [],
+    "beforeBuildTasks": [
+        {
+            "name": "Pack Resources",
+            "disable": false,
+            "abortAfterFailed": false,
+            "stopBuildAfterFailed": true,
+            "command": "python src\\third\\rucfs\\tools\\mkfs.rucfs.py embed/ ${OutDir}/rucfs.img && python tools\\hexembed.py ${OutDir}/rucfs.img ${OutDir}/rucfs.img.h"
+        },
+        {
+            "name": "Build TAG",
+            "disable": false,
+            "abortAfterFailed": false,
+            "stopBuildAfterFailed": true,
+            "command": "python tools\\taggen.py 1.0.0 devbuild ${OutDir}/githash.h"
+        }
+    ],
     "afterBuildTasks": [],
     "global": {
         "use-microLIB": true,
@@ -9,7 +24,7 @@
     "c/cpp-compiler": {
         "optimization": "level-3",
         "language-c": "c11",
-        "language-cpp": "c++11",
+        "language-cpp": "c++14",
         "link-time-optimization": true,
         "warnings": "ac5-like-warnings"
     },

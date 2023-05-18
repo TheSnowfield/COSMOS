@@ -44,9 +44,9 @@ void rcc_reconfigure() {
   RCC_PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
   RCC_PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
 
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) panic();
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK) panic();
-  if (HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphClkInit) != HAL_OK) panic();
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) panic(NULL);
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK) panic(NULL);
+  if (HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphClkInit) != HAL_OK) panic(NULL);
   
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
@@ -58,6 +58,30 @@ void gpio_reconfigure() {
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  // initialize spi
+  __HAL_RCC_SPI1_CLK_ENABLE(); {
+    HAL_GPIO_Init(SPI1_PORT, &port_spi1);
+    HAL_GPIO_Init(SPI1_PORT, &port_spi1_ctl);
+    HAL_SPI_Init(&spi1);
+  }
+
+  // initialize usart1
+  __HAL_RCC_USART1_CLK_ENABLE(); {
+    HAL_GPIO_Init(USART_PORT, &port_usart1_ctl);
+    HAL_GPIO_Init(USART_PORT, &port_usart1);
+    HAL_UART_Init(&usart1);
+  }
+
+  // initialize i2c1
+  __HAL_RCC_I2C1_CLK_ENABLE(); {
+    HAL_GPIO_Init(I2C1_PORT, &port_i2c1);
+    HAL_GPIO_Init(I2C1_PORT, &port_i2c1_ctl);
+
+    HAL_I2C_Init(&i2c1);
+    HAL_I2CEx_ConfigAnalogFilter(&i2c1, I2C_ANALOGFILTER_ENABLE);
+    HAL_I2CEx_ConfigDigitalFilter(&i2c1, 0);
+  }
 }
 
 // int fputc(int ch, FILE *f) {
@@ -69,27 +93,19 @@ int main() {
 
   HAL_Init(); {
 
-#ifndef APP_SIMULATION_MODE_ON
-    // Reconfigure RCC
+    // reconfigure rcc
     rcc_reconfigure();
-#endif
 
-    // Reconfigure GPIO
+    // reconfigure gpio
     gpio_reconfigure();
 
-    // Init scheduler
+    // init scheduler
     scheduler_init();
-
-#ifndef APP_SIMULATION_MODE_ON
-    // Enable display
-    display_init(false); {
-      display_clear(clr_black);
-      display_light(true);
-    }
-#endif
   }
 
-  // Call appmain
-  APPMAIN_FUNCTION();
+  // call appmain
+  scheduler_call_proc(appmain);
+
+  // run scheduler
   while(1) scheduler_handler();
 }

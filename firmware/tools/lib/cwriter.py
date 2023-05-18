@@ -1,4 +1,5 @@
 import io
+import os
 
 class cwriter:
   def __init__(self) -> None:
@@ -33,7 +34,7 @@ class cwriter:
     self.fp = open(ofile, "wt")
     self.fp.seek(io.SEEK_SET, 0)
     self.fname = self.__filename(ifile)
-    self.cfname = ifile.replace(".", "_").replace("/","_")
+    self.cfname = os.path.basename(ifile).replace(".", "_")
     while(self.cfname.find("__") != -1): self.cfname = self.cfname.replace("__", "_")
     if(self.cfname[0] == "_"): self.cfname = self.cfname[1:]
     self.cmacro = self.cfname.upper()

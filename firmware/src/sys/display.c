@@ -7,28 +7,16 @@
 #include "display.h"
 
 static display_t display;
+static font_t _font[MAX_FONT_SLOTS] = {0};
+static font_id_t _font_default;
 
 // void __memset_pixel(pixel_t* dst, pixel_t val, uint32_t sz) {
 //   for(pixel_t* i = dst, *j = i + sz; i < j; ++i) *i = val;
 // }
 
-void display_init(bool vsync) {
-
-  ch1115_init(); {
-    display_clear(clr_white);
-    // display_set_readycb(__display_ready);
-    // ch1115_init_dma(!vsync); {
-    //   ch1115_write_bytes_dma((uint8_t *)gbuffer, sizeof(gbuffer));
-    // }
-  }
-
+void display_init() {
+  ch1115_init();
   display.init = true;
-  display.vsync = false;
-  display.vsync_en = vsync;
-}
-
-bool display_inited() {
-  return display.init;
 }
 
 status_t display_light(bool en) {
@@ -57,60 +45,76 @@ status_t display_clear(ch1115_color_t color) {
   return ch1115_clear(color);
 }
 
-static font_t _font = {0};
-static bool _usefont = false;
-bool display_usefont(uint8_t fontw, uint8_t fonth,
-uint16_t imgw, uint16_t imgh, const uint8_t *img) {
+bool display_usefont(font_id_t slot, uint8_t fontw, uint8_t fonth,
+                     uint16_t imgw, uint16_t imgh, uint8_t space, const uint8_t *img) {
   if(!img) return false;
 
-  _usefont = true;
-  _font.symbol.x = 0;
-  _font.symbol.y = 0;
-  _font.symbol.width = fontw;
-  _font.symbol.height = fonth;
-  _font.texture.x = 0;
-  _font.texture.y = 0;
-  _font.texture.width = imgw;
-  _font.texture.height = imgh;
-  _font.image = (uint8_t *)img;
-  _font.space = 0;
+  _font[slot].symbol.x = 0;
+  _font[slot].symbol.y = 0;
+  _font[slot].symbol.width = fontw;
+  _font[slot].symbol.height = fonth;
+  _font[slot].texture.x = 0;
+  _font[slot].texture.y = 0;
+  _font[slot].texture.width = imgw;
+  _font[slot].texture.height = imgh;
+  _font[slot].image = (uint8_t *)img;
+  _font[slot].space = space;
 
   return true;
 }
 
-// void display_draw_string(uint8_t x, uint8_t y, const char* str) {
-//   if(!_usefont) return;
+bool display_default_font(font_id_t slot) {
+  if(slot > MAX_FONT_SLOTS) return false;
+  _font_default = slot;
+  return true;
+}
 
-//   uint8_t top = y;
-//   uint8_t left = x;
-//   for(; *str != 0; ++str) {
+uint8_t display_get_default_font() {
+  return _font_default;
+}
 
-//     // check if we need to move to the next line
-//     if(*str == '\n' || left >= (DISPLAY_W - _font.symbol.width)) {
-//       top += _font.symbol.height;
-//       left = x;
-//       continue;
-//     }
+void display_draw_string(const char* str) {
+  return display_draw_string_ex(_font_default, str);
+}
 
-//     // draw character
-//     display_bitblt_area(left, top, (*str - ' ') * _font.symbol.width, 0,
-//                         _font.symbol.width, _font.symbol.height,
-//                         _font.texture.width, _font.image);
+void display_draw_char_ex(font_id_t slot, const char ch) {
 
-//     left += _font.symbol.width + _font.space;
-//   }
-// }
+  size_t index = ch - ' ';
+  size_t y = index * _font[slot].symbol.width;
 
-// void display_scroll_left(uint8_t x, uint8_t y, uint8_t w, uint8_t h) {
-//   for(int i = y; i < y + h; ++i) {
-//     memcpy(&gbuffer[i * DISPLAY_W + x], &gbuffer[i * DISPLAY_W + (x + 1)], (w - 1) * sizeof(pixel_t));
-//   }
-// }
+  for(uint8_t column = 0; column < _font[slot].symbol.width; ++column)
+    ch1115_set_pixel_column(_font[slot].image[y + column]);
+}
+
+void display_draw_string_ex(font_id_t slot, const char* str) {
+
+  // uint8_t top = y;
+  // uint8_t left = x;
+  for(; *str != 0; ++str) {
+
+    // check if we need to move to the next line
+    // if(*str == '\n' || left >= (DISPLAY_W - _font.symbol.width)) {
+    //   top += _font.symbol.height;
+    //   left = x;
+    //   continue;
+    // }
+
+    // draw character
+    display_draw_char_ex(slot, *str);
+
+    // apply font spaces
+    for(size_t i = 0; i < _font[slot].space; ++i)
+      ch1115_set_pixel_column(0x00);
+  }
+}
+
+void display_draw_char(const char ch) {
+  return display_draw_char_ex(_font_default, ch);
+}
 
 void display_bitblt(uint8_t dstx, uint8_t dsty,
                     uint8_t srcx, uint8_t srcy, uint8_t srcw, uint8_t srch,
                     const uint8_t* data) {
-
   display_bitblt_area(dstx, dsty, srcx, srcy, srcw, srch, srcw, data);
 }
 
@@ -123,6 +127,14 @@ void display_bitblt_area(uint8_t dstx, uint8_t dsty,
     ch1115_set_page(page);
     ch1115_set_column(0);
     for(uint8_t column = 0; column < CH1115_WIDTH; ++column)
-      ch1115_set_pixel_column(data[(3-page) * CH1115_WIDTH + column]);
+      ch1115_set_pixel_column(data[page * CH1115_WIDTH + column]);
   }
+}
+
+void display_move_caret(uint8_t x, uint8_t y) {
+  y = 3 - y;
+  display.caretx = x;
+  display.carety = y;
+  ch1115_set_page(y);
+  ch1115_set_column(x);
 }

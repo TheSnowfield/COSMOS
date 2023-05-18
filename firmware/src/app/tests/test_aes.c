@@ -35,11 +35,11 @@ void test_aes_appmain() {
   // encrypt test
   crypto_aes256cbc_encrypt(key_256, cbc_iv, cbc_expected_plaintext, cbc_tmp, 64);
   if(memcmp(cbc_expected_ciphertext, cbc_tmp, 64) != 0)
-    panic();
+    panic(NULL);
 
   // decrypt test
   crypto_aes256cbc_decrypt(key_256, cbc_iv, cbc_expected_ciphertext, cbc_tmp, 64);
   if(memcmp(cbc_expected_plaintext, cbc_tmp, 64) != 0)
-    panic();
+    panic(NULL);
 
 }

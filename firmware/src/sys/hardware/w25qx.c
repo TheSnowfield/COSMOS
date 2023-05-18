@@ -12,15 +12,6 @@
 
 void w25qx_init() {
 
-  // Initialize spi peripheral
-  HAL_GPIO_Init(SPI1_PORT, &port_spi1);
-
-  // Initialize spi control pins
-  HAL_GPIO_Init(SPI1_PORT, &port_spi1_ctl);
-
-  __HAL_RCC_SPI1_CLK_ENABLE();
-  HAL_SPI_Init(&spi1);
-
   // reset chip
   w25qx_unselect();
   w25qx_unreset();

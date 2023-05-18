@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F030x6</Define>
               <Undefine></Undefine>
-              <IncludePath>src\include;src\core;src\core\include;src\core\hal\include;src\;src\app;src\sys;src\sys\hardware;src\ui;src\third\cortexm-AES</IncludePath>
+              <IncludePath>src\;src\core;src\core\include;src\core\hal\include;src\ui;src\app;src\sys;src\sys\hardware;src\include;src\third\cortexm-AES;src\third\rucfs\src;build\Debug</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -738,6 +738,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\sys\hardware\ch1115.c</FilePath>
             </File>
+            <File>
+              <FileName>config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\sys\hardware\config.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -748,15 +753,35 @@
               <FileType>1</FileType>
               <FilePath>src\app\app.c</FilePath>
             </File>
+            <File>
+              <FileName>passbook.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\passbook.c</FilePath>
+            </File>
+            <File>
+              <FileName>resource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\resource.c</FilePath>
+            </File>
+            <File>
+              <FileName>language.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\i18n\language.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>APP/LAYOUT</GroupName>
           <Files>
             <File>
+              <FileName>select.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\layout\main\select.c</FilePath>
+            </File>
+            <File>
               <FileName>unlock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>src\app\layout\main\unlock.c</FilePath>
+              <FilePath>.\src\app\layout\security\unlock.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -764,14 +789,14 @@
           <GroupName>UI/WIDGETS</GroupName>
           <Files>
             <File>
-              <FileName>stack.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\ui\widgets\stack.c</FilePath>
-            </File>
-            <File>
               <FileName>menu.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\ui\widgets\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>stack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\ui\stack.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -812,6 +837,16 @@
               <FileName>lookup_tables.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\third\cortexm-AES\aes\target\lookup_tables.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LIBRARY</GroupName>
+          <Files>
+            <File>
+              <FileName>rucfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\third\rucfs\src\rucfs.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -24,37 +24,34 @@ typedef struct font {
 
 typedef struct {
   bool init;
-
-  bool vsync;
-  bool vsync_en;
-  uint32_t vsync_tick;
-  uint16_t vsync_counter;
-  uint16_t vsync_rate;
-
+  uint8_t caretx;
+  uint8_t carety;
 } display_t;
 
-/**
- * @brief Init display
- * @param vsync Enable vsync
- */
-void display_init(bool vsync);
+typedef enum {
+  FONT_PIXEL_3X5 = 0,
+  FONT_PIXEL_5X7 = 1,
+  MAX_FONT_SLOTS
+} font_id_t;
 
 /**
- * @brief Display initialized
+ * @brief init display
+ */
+void display_init();
+
+/**
+ * @brief display initialized
  */
 bool display_inited();
 
-bool display_vsync();
-void display_update();
-
 /**
- * @brief Turn on display back light
+ * @brief turn on display back light
  * @param en enabled
  */
 status_t display_light(bool en);
 
 /**
- * @brief Bitblt in an area
+ * @brief bitblt in an area
  * @param dstx dest x
  * @param dsty dest y
  * @param srcx src x
@@ -69,7 +66,7 @@ void display_bitblt_area(uint8_t dstx, uint8_t dsty,
                          uint16_t width, const uint8_t* data);
 
 /**
- * @brief Copy origin image to display
+ * @brief copy origin image to display
  * @param dstx destination x
  * @param dsty destination y
  * @param srcx source x
@@ -83,7 +80,7 @@ void display_bitblt(uint8_t dstx, uint8_t dsty,
                     const uint8_t* data);
 
 /**
- * @brief Fill the block with a color
+ * @brief fill the block with a color
  * @param x dest x
  * @param y dest y
  * @param width block width
@@ -93,7 +90,7 @@ void display_bitblt(uint8_t dstx, uint8_t dsty,
 void display_fill_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint32_t color);
 
 /**
- * @brief Set pixel color
+ * @brief set pixel color
  * @param x pixel x
  * @param y pixel y
  * @param color pixel color
@@ -101,7 +98,7 @@ void display_fill_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint
 void display_set_pixel(uint8_t x, uint8_t y, uint32_t color);
 
 /**
- * @brief Reverse color
+ * @brief reverse color
  * @param x pixel x
  * @param y pixel y
  * @param width block width
@@ -109,42 +106,52 @@ void display_set_pixel(uint8_t x, uint8_t y, uint32_t color);
  */
 void display_reverse_color(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
 
+void display_draw_string(const char* str);
+
 /**
- * @brief Draw a string
+ * @brief draw a string
  * @param x destination x
  * @param y destination y
  * @param str string
  */
-void display_draw_string(uint8_t x, uint8_t y, const char* str);
+void display_draw_string_ex(font_id_t slot, const char* str);
+
+void display_draw_char(const char ch);
+void display_draw_char_ex(font_id_t slot, const char ch);
+
 
 /**
- * @brief Use a font
+ * @brief use a font
+ * @param slot font slot, condiser FONT_xxx macros
  * @param fontw font symbol width
  * @param fonth font symbol height
  * @param imgw font atlas width
  * @param imgh font atlas height
+ * @param space character space
  * @param img font atlas image
  */
-bool display_usefont(uint8_t fontw, uint8_t fonth, uint16_t imgw, uint16_t imgh, const uint8_t *img);
+bool display_usefont(font_id_t slot, uint8_t fontw, uint8_t fonth, uint16_t imgw, uint16_t imgh, uint8_t space, const uint8_t *img);
 
 /**
- * @brief Clear with a color
+ * @brief set default font
+ * @param slot font slot
+ * @return if success return true
+ */
+bool display_default_font(font_id_t slot);
+
+/**
+ * @brief clear with a color
  * @param color color
  */
 status_t display_clear(ch1115_color_t color);
 
 /**
- * @brief Scroll screen
- * @param x rect x
- * @param y rect y
- * @param w rect width
- * @param h rect height
- */
-void display_scroll_left(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
-
-/**
- * @brief Get display hardware refresh rate in Hz
+ * @brief get display hardware refresh rate in Hz
  */
 uint16_t display_refresh_rate();
+
+void display_draw_char(const char ch);
+
+void display_move_caret(uint8_t x, uint8_t y);
 
 #endif // !_SYS_DISPLAY_H

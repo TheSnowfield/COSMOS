@@ -1,5 +1,9 @@
 #ifndef _SYS_PANIC_H
 
-void panic();
+#include <stdint.h>
 
-#endif // !_SYS_PANIC_H
+void panic(const char *msg);
+void assert(uint8_t condition, const char *msg);
+void reset();
+
+#endif /* _SYS_PANIC_H */

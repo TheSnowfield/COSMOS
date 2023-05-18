@@ -1,3 +1,6 @@
 [submodule "firmware/src/third/cortexm-AES"]
 	path = firmware/src/third/cortexm-AES
 	url = https://github.com/jnk0le/cortexm-AES
+[submodule "firmware/src/third/rucfs"]
+	path = firmware/src/third/rucfs
+	url = https://github.com/TheSnowfield/rucfs

@@ -94,12 +94,12 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
   { CH1115_REG_SET_PAGEADD,             NULL,       0, 1   },
   { CH1115_REG_CONTRAST_CONTROL,        { 0x4D },   1, 1   },
   { CH1115_REG_IREF_REG,                { 0x00 },   1, 1   },
-  { 0xA1,                               NULL,       0, 1   },
   { CH1115_REG_SEG_SET_PADS,            NULL,       0, 1   },
+
   { 0xA4,                               NULL,       0, 1   },
   { CH1115_REG_DISPLAY_NORMAL,          NULL,       0, 1   },
   { 0xA8,                               { 0x1F },   1, 1   },
-  { 0xC8,                               NULL,       0, 1   },
+  // { 0xC8,                               NULL,       0, 1   },
   { CH1115_REG_OFFSET_MODE_SET,         { 0x10 },   1, 1   },
   { CH1115_REG_OSC_FREQ_MODE_SET,       { 0xB1 },   1, 1   },
   { CH1115_REG_PRECHARGE_MODE_SET,      { 0x62 },   1, 1   },
@@ -107,7 +107,7 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
   { 0x32,                               NULL,       0, 1   },
   { CH1115_REG_DC_MODE_SET,             { 0x8B },   1, 1   },
   { CH1115_REG_COMMON_SCAN_DIR + 8,     NULL,       0, 1   },
-  { CH1115_REG_SEG_SET_REMAP   + 1,     NULL,       0, 1   },
+  { CH1115_REG_SEG_SET_REMAP   + 0,     NULL,       0, 1   },
   { 0xE3,                               NULL,       0, 150 },
   { CH1115_REG_DISPLAY_ON,              NULL,       0, 150 },
 

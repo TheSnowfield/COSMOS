@@ -30,15 +30,6 @@ status_t ch1115_write_cmd(uint8_t cmd, uint8_t* args, uint8_t len) {
 
 void ch1115_init() {
 
-  HAL_GPIO_Init(I2C1_PORT, &port_i2c1);
-  HAL_GPIO_Init(I2C1_PORT, &port_i2c1_ctl);
-
-  __HAL_RCC_I2C1_CLK_ENABLE(); {
-    HAL_I2C_Init(&i2c1);
-    HAL_I2CEx_ConfigAnalogFilter(&i2c1, I2C_ANALOGFILTER_ENABLE);
-    HAL_I2CEx_ConfigDigitalFilter(&i2c1, 0);
-  }
-
   // reset display
   ch1115_reset_reset(); HAL_Delay(10);
   ch1115_reset_set();   HAL_Delay(10);
@@ -56,25 +47,7 @@ void ch1115_init() {
 
   ch1115_write_cmd(CH1115_REG_SET_PAGEADD + 0, NULL, 0);
   ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + 0, NULL, 0);
-
 }
-
-// void ch1115_init_dma(bool mode) {
-//   __HAL_RCC_DMA1_CLK_ENABLE();
-//   HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0, 0);
-//   HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
-
-//   // initialize DMA
-//   dma_i2c1.Init.Mode = mode ? DMA_CIRCULAR : DMA_NORMAL;
-//   HAL_DMA_Init(&dma_i2c1);
-
-//   // link DMA with I2C
-//   __HAL_LINKDMA(&i2c1, hdmatx, dma_i2c1);
-// }
-
-// void ch1115_write_bytes_dma(uint8_t *data, uint32_t len) {
-//   HAL_I2C_Master_Transmit_DMA(&i2c1, CH1115_ADDRESS, data, len);
-// }
 
 status_t ch1115_light_on() {
   return ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);

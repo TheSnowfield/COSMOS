@@ -1,197 +1,202 @@
 {
   "name": "firmware",
   "type": "ARM",
-  "mode": "Debug",
-  "toolchain": "AC6",
-  "dependenceList": [
-    {
-      "groupName": "custom",
-      "depList": [
-        {
-          "name": "default",
-          "incList": [
-            "./src/include",
-            "./src/core",
-            "./src/core/include",
-            "./src/core/hal/include",
-            "./src/app",
-            "./src/ui",
-            "./src/third/cortexm-AES"
-          ],
-          "libList": [],
-          "sourceDirList": [],
-          "defineList": [
-            "STM32F030x6"
-          ]
-        }
-      ]
-    }
-  ],
-  "compileConfig": {
-    "cpuType": "Cortex-M0",
-    "floatingPointHardware": "none",
-    "useCustomScatterFile": false,
-    "scatterFilePath": "undefined",
-    "storageLayout": {
-      "RAM": [
-        {
-          "tag": "RAM",
-          "id": 1,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "noInit": false
-        },
-        {
-          "tag": "RAM",
-          "id": 2,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "noInit": false
-        },
-        {
-          "tag": "RAM",
-          "id": 3,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "noInit": false
-        },
-        {
-          "tag": "IRAM",
-          "id": 1,
-          "mem": {
-            "startAddr": "0x20000000",
-            "size": "0x1000"
-          },
-          "isChecked": true,
-          "noInit": false
-        },
-        {
-          "tag": "IRAM",
-          "id": 2,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "noInit": false
-        }
-      ],
-      "ROM": [
-        {
-          "tag": "ROM",
-          "id": 1,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "isStartup": false
-        },
-        {
-          "tag": "ROM",
-          "id": 2,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "isStartup": false
-        },
-        {
-          "tag": "ROM",
-          "id": 3,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "isStartup": false
-        },
-        {
-          "tag": "IROM",
-          "id": 1,
-          "mem": {
-            "startAddr": "0x8000000",
-            "size": "0x8000"
-          },
-          "isChecked": true,
-          "isStartup": true
-        },
-        {
-          "tag": "IROM",
-          "id": 2,
-          "mem": {
-            "startAddr": "",
-            "size": ""
-          },
-          "isChecked": false,
-          "isStartup": false
-        }
-      ]
-    },
-    "options": "null"
-  },
-  "uploader": "OpenOCD",
+  "dependenceList": [],
   "srcDirs": [
-    "./.eide/deps",
-    "./src"
+    ".eide/deps",
+    "src"
   ],
   "virtualFolder": {
     "name": "<virtual_root>",
     "files": [],
     "folders": []
   },
-  "excludeList": [
-    "src/lib",
-    "src/third/cortexm-AES/aes/tests",
-    "src/third/cortexm-AES/aes/target/CM3_1T",
-    "src/third/cortexm-AES/aes/target/CM3_1T_modes",
-    "src/third/cortexm-AES/aes/target/CM3_sBOX",
-    "src/third/cortexm-AES/aes/target/CM4_DSPsBOX",
-    "src/third/cortexm-AES/aes/target/CM7_1T",
-    "src/third/cortexm-AES/aes/target/CM7_1T_modes",
-    "src/third/cortexm-AES/aes/target/CM7_DSPsBOX",
-    "src/third/cortexm-AES/aes/target/CM7_sBOX",
-    "src/third/u8g2/cppsrc",
-    "src/third/u8g2/tools",
-    "src/third/u8g2/sys",
-    "src/third/u8g2/doc",
-    "src/third/cortexm-AES/aes/target/CM0_FASTMULsBOX"
-  ],
   "outDir": "build",
   "deviceName": null,
   "packDir": null,
-  "uploadConfig": {
-    "bin": "",
-    "target": "stm32f0x",
-    "interface": "cmsis-dap",
-    "baseAddr": "0x08000000"
-  },
-  "uploadConfigMap": {
-    "JLink": {
-      "bin": "",
-      "baseAddr": "0x08000000",
-      "cpuInfo": {
-        "vendor": "ST",
-        "cpuName": "STM32F103C8"
-      },
-      "proType": 1,
-      "speed": 8000,
-      "otherCmds": ""
-    }
-  },
   "miscInfo": {
     "uid": "10d6bb63f3d5a0406f9deba4449aba3b"
   },
-  "targets": {},
-  "version": "3.2"
+  "targets": {
+    "Debug": {
+      "excludeList": [
+        "src/lib",
+        "src/third/cortexm-AES/aes/tests",
+        "src/third/cortexm-AES/aes/target/CM3_1T",
+        "src/third/cortexm-AES/aes/target/CM3_1T_modes",
+        "src/third/cortexm-AES/aes/target/CM3_sBOX",
+        "src/third/cortexm-AES/aes/target/CM4_DSPsBOX",
+        "src/third/cortexm-AES/aes/target/CM7_1T",
+        "src/third/cortexm-AES/aes/target/CM7_1T_modes",
+        "src/third/cortexm-AES/aes/target/CM7_DSPsBOX",
+        "src/third/cortexm-AES/aes/target/CM7_sBOX",
+        "src/third/u8g2/cppsrc",
+        "src/third/u8g2/tools",
+        "src/third/u8g2/sys",
+        "src/third/u8g2/doc",
+        "src/third/cortexm-AES/aes/target/CM0_FASTMULsBOX",
+        "src/third/rucfs/tests",
+        "src/third/rucfs/img",
+        "src/third/rucfs/tools"
+      ],
+      "toolchain": "AC6",
+      "compileConfig": {
+        "cpuType": "Cortex-M0",
+        "floatingPointHardware": "none",
+        "useCustomScatterFile": false,
+        "scatterFilePath": "undefined",
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "RAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 3,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x20000000",
+                "size": "0x1000"
+              },
+              "isChecked": true,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "ROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 3,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x8000000",
+                "size": "0x8000"
+              },
+              "isChecked": true,
+              "isStartup": true
+            },
+            {
+              "tag": "IROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "",
+                "size": ""
+              },
+              "isChecked": false,
+              "isStartup": false
+            }
+          ]
+        },
+        "options": "null"
+      },
+      "uploader": "OpenOCD",
+      "uploadConfig": {
+        "bin": "",
+        "target": "stm32f0x",
+        "interface": "cmsis-dap",
+        "baseAddr": "0x08000000"
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "0x08000000",
+          "cpuInfo": {
+            "vendor": "ST",
+            "cpuName": "STM32F103C8"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          "src",
+          "src/core",
+          "src/core/include",
+          "src/core/hal/include",
+          "src/core/device/f030k6",
+          "src/ui",
+          "src/app",
+          "src/sys",
+          "src/sys/hardware",
+          "src/include",
+          "src/third/cortexm-AES",
+          "src/third/rucfs/src",
+          "build/Debug"
+        ],
+        "libList": [],
+        "sourceDirList": [],
+        "defineList": [
+          "STM32F030x6"
+        ]
+      }
+    }
+  },
+  "version": "3.3"
 }

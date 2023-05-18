@@ -3,7 +3,7 @@
 import sys
 from PIL import Image
 from distutils.log import error
-from lib.cwriter import cwriter
+from lib.binwriter import binwriter
 
 def main():
 
@@ -18,12 +18,12 @@ def main():
   width, height = image.size
   print("Image size: %d x %d" % (width, height))
 
-  if width > 32 or height > 128:
-    error("Image is too large, limit is 32(w) x 128(h)")
-    sys.exit(1)
+  # if width > 32 or height > 128:
+  #   error("Image is too large, limit is 32(w) x 128(h)")
+  #   sys.exit(1)
 
   # Create writer
-  writer = cwriter()
+  writer = binwriter()
   writer.open(sys.argv[1], sys.argv[2])
 
   # Read image pixels
@@ -34,8 +34,8 @@ def main():
       # Read each column
       bits = 0
       for row in range(8):
-        bits <<= 1
-        if(pixels[page * 8 + row, column] == 255): bits |= 1
+        bits >>= 1
+        if(pixels[page * 8 + row, column] == 255): bits |= 0x80
     
       # Write 8 pixels to file
       writer.append(bytes.fromhex("%02X" % bits))

@@ -2,22 +2,22 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/panic.h>
-#include <sys/passbook.h>
+#include <app/passbook.h>
 
 void assert_note_id(uint16_t id) {
   if (id < 1 || id > 2047)
-    panic();
+    panic(NULL);
 }
 
 void assert_value(var, val) {
   if (var != val)
-    panic();
+    panic(NULL);
 }
 
 uint32_t test_passbook_read_index() {
   uint32_t cnt = read_passbook_cnt();
   if (cnt < 0)
-    panic();
+    panic(NULL);
 
   if (cnt > 0) {
     uint16_t *id_list = (uint16_t*)malloc(cnt * 2);
@@ -67,15 +67,15 @@ uint16_t test_passbook_add_note() {
 
   fetch_passnote_name(id, name_saved);
   if(memcmp(name_saved, name, 7) != 0)
-    panic();
+    panic(NULL);
 
   fetch_passnote_data(id, &data_saved);
   if(memcmp(name_saved, name, 7) != 0)
-    panic();
+    panic(NULL);
   if(memcmp(account_saved, account, 9) != 0)
-    panic();
+    panic(NULL);
   if(memcmp(password_saved, password, 13) != 0)
-    panic();
+    panic(NULL);
 
   return id;
 }
@@ -85,11 +85,11 @@ void test_passbook_appmain() {
   uint16_t id = test_passbook_add_note();
   id = test_passbook_add_note();
   if (test_passbook_read_index() - cnt != 2)
-    panic();
+    panic(NULL);
 
   cnt += 2;
 
   delete_passnote(id);
   if (cnt - test_passbook_read_index() != 1)
-    panic();
+    panic(NULL);
 }
