@@ -127,19 +127,6 @@ status_t ch9329_release_keys() {
   return ch9329_send_keys(&(ch9329_keystat_t) {});
 }
 
-// status_t ch9329_set_usb_string(char* data, uint8_t length);
-
-// void ch9329_send_keys(uint8_t *data) {
-//   uint8_t recvlen;
-//   data_t* recvdata;
-//   ch9329_send_packet(CH9329_CMD_SEND_KB_GENERAL_DATA, data, 8, &recvdata, &recvlen);
-  
-// }
-
-// stat_t ch9329_get_info(ch9329_chip_info_t *info){
-//   const char cmd_ver[] = "\x57\xAB\x00\x01\x00\x03";
-//   HAL_UART_Transmit(&usart1, (uint8_t *)cmd_ver, sizeof(cmd_rst), 1000);
-//   info.xxx
-//   info.xxx
-//   return ok;
-// }
+status_t ch9329_soft_reset() {
+  return ch9329_send_packet(CH9329_CMD_RESET, NULL, 0, NULL, NULL);
+}

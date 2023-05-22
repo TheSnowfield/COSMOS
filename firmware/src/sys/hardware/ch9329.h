@@ -271,6 +271,6 @@ status_t ch9329_set_default_cfg();
 status_t ch9329_send_keys(ch9329_keystat_t *stat);
 status_t ch9329_release_keys();
 
-status_t ch9329_reset();
+status_t ch9329_soft_reset();
 
 #endif /* __SYS_HARDWARE_CH9329_H */
