@@ -8,19 +8,6 @@
 #undef _CH9329_INTERNAL
 
 void ch9329_init() {
-
-  // status_t stat;
-  // ch9329_para_cfg_t* paracfg;
-  // if(ch9329_get_para_cfg(&paracfg) == ok) {
-  //   int x = paracfg->address;
-  //   // printf("CH9329 chip info: %s\n", chipinfo->usb_connected);
-  // }
-
-  // char* usbstr = NULL;
-  // uint8_t length = 0;
-  // if(ch9329_get_usb_string(manufacturer, &usbstr, &length)) {
-  //   usbstr[0] = '1';
-  // }
 }
 
 void _packet_init(packet_t *packet, uint8_t address) {
@@ -42,16 +29,16 @@ void _packet_set_command(packet_t *packet, uint8_t command,
   memcpy(packet->buffer, data, length);
 }
 
-void _packet_update_checksum(packet_t *packet) {
+void _packet_update_checksum(packet_t* packet) {
   if(!packet) return;
   uint8_t checksum = 0;
-  uint8_t *ptr = (uint8_t *)packet;
+  uint8_t* ptr = (uint8_t *)packet;
   for(uint8_t i = 0; i < PACKET_SIZE(packet) - 1; ++i) checksum += ptr[i];
   packet->buffer[packet->length] = checksum;
 }
 
-status_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
-                            void** recvdata, uint8_t *recvlen) {
+status_t ch9329_send_packet(uint8_t command, uint8_t* data, uint8_t length,
+                            void* recvdata, uint8_t* recvlen) {
 
   // init a packet
   packet_t packet; {
@@ -62,7 +49,7 @@ status_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
 
   // send data
   HAL_UART_Transmit(&usart1, (uint8_t *)&packet, PACKET_SIZE(&packet), 200);
-  HAL_UART_Receive(&usart1, (uint8_t *)&packet, MAX_BUFFER_SIZE, 100);
+  HAL_UART_Receive(&usart1, (uint8_t *)&packet, MAX_BUFFER_SIZE, 500);
 
   // check length
   if(packet.length > 64) return error;
@@ -78,36 +65,49 @@ status_t ch9329_send_packet(uint8_t command, uint8_t *data, uint8_t length,
 
   // set output data
   if(recvlen) *recvlen = packet.length;
-  if(recvdata) *recvdata = packet.buffer;
+  if(recvdata) memcpy(recvdata, packet.buffer, packet.length);
 
   return ok;
 }
 
-status_t ch9329_get_info(ch9329_chip_info_t** info) {
+status_t ch9329_get_info(ch9329_chip_info_t* info) {
   return ch9329_send_packet(CH9329_CMD_GET_INFO, NULL, 0, (void **)info, NULL);
 }
 
-status_t ch9329_get_para_cfg(ch9329_para_cfg_t** config) {
-  return ch9329_send_packet(CH9329_CMD_GET_PARA_CFG, NULL, 0, (void **)config, NULL);
+status_t ch9329_get_para_cfg(ch9329_para_cfg_t* config) {
+  return ch9329_send_packet(CH9329_CMD_GET_PARA_CFG, NULL, 0, config, NULL);
 }
 
 status_t ch9329_set_para_cfg(ch9329_para_cfg_t* config) {
   return ch9329_send_packet(CH9329_CMD_SET_PARA_CFG, NULL, 0, NULL, NULL);
 }
 
-status_t ch9329_get_usb_string(ch9329_usbstr_t type, char** str, uint8_t *length) {
+status_t ch9329_get_usb_string(ch9329_usbstr_t type, char* str, uint8_t *length) {
 
-  status_t ret = ch9329_send_packet(CH9329_CMD_GET_USB_STRING, (uint8_t *)&type, 1, (void **)str, length);
+  uint8_t buff[32];
+  uint8_t bufflen = sizeof(buff);
+  status_t ret = ch9329_send_packet(CH9329_CMD_GET_USB_STRING, (uint8_t *)&type, 1, buff, &bufflen);
   if(ret != ok) return ret;
   if(*length == 0) return error;
 
-  // 1 byte for type
-  // 1 byte for length
-  // n bytes for string
-  *length = *((*str) + 1);
-  *str += 2;
+  // // 1 byte for type
+  // // 1 byte for length
+  // // n bytes for string
+  *length = bufflen - 2;
+  strncpy(str, (char *)buff + 2, *length);
 
-  return ret;
+  return ok;
+}
+
+status_t ch9329_set_usb_string(ch9329_usbstr_t type, char* data) {
+
+  uint8_t buff[strlen(data) + 2]; {
+    buff[0] = type;
+    buff[1] = strlen(data);
+    memcpy(buff + 2, data, buff[1]);
+  }
+
+  return ch9329_send_packet(CH9329_CMD_SET_USB_STRING, buff, sizeof(buff), NULL, NULL);
 }
 
 status_t ch9329_set_default_cfg() {

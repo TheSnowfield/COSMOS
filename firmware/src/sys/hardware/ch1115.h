@@ -105,7 +105,6 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
   { 0xE3,                               NULL,       0, 150 },
   // { CH1115_REG_BREATHEFFECT_SET,        { 0b10000000 }, 1, 1 },
 
-  // { 0x81,                               {0b11111111},       1, 150 },
 
   { CH1115_REG_DISPLAY_OFF,              NULL,       0, 150 },
 };

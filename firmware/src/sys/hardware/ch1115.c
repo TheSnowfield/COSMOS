@@ -50,9 +50,6 @@ void ch1115_init() {
     if(ch1115_init_cmd[i].delay != 0)
       HAL_Delay(ch1115_init_cmd[i].delay);
   }
-
-  // ch1115_write_cmd(CH1115_REG_SET_PAGEADD + 0, NULL, 0);
-  // ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + 0, NULL, 0);
 }
 
 status_t ch1115_light_on(bool breathing) {
@@ -62,7 +59,7 @@ status_t ch1115_light_on(bool breathing) {
     // ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);
     // for (uint8_t i = 0; i < 255; i++) {
     //   ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, &i, 1);
-    //   HAL_Delay(3);
+    //   HAL_Delay(0);
     // }
 
     ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, (uint8_t[]) { 0b00000000 }, 1);
@@ -90,6 +87,8 @@ status_t ch1115_light_off(bool breathing) {
   }
 
   ch1115_write_cmd(CH1115_REG_DISPLAY_OFF, NULL, 0);
+  return ok;
+  
 }
 
 status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color) {
@@ -97,10 +96,12 @@ status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color) {
   ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + X2COLUMN_L(x), NULL, 0);
   ch1115_write_cmd(CH1115_REG_SET_COLADD_MSB + X2COLUMN_H(x), NULL, 0);
   HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, (uint8_t[]){ 0x40, ~(color ^ (1 << (y & 0x0F))) }, 2, HAL_MAX_DELAY);
+  return ok;
 }
 
 status_t ch1115_set_pixel_column(uint8_t bits) {
   HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, (uint8_t[]){ 0x40, bits }, 2, HAL_MAX_DELAY);
+  return ok;
 }
 
 status_t ch1115_set_page(uint8_t page) {

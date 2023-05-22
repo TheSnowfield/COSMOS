@@ -10,7 +10,8 @@
 #include "display.h"
 
 #define PIXEL2BYTES(p) (p / 8)
-#define PAGESTART(p) (p * DISPLAY_COLUMNS)
+#define X2PAGE(x) ((x) / DISPLAY_BITS_PER_COLUMN)
+#define MKMASK(width, var) {for(size_t i = 0; i < width; ++i) var = (var | 0b00000001) << 1; }
 
 static display_t _display = { 0 };
 static page_buffer_t _buffer[DISPLAY_PAGES];
@@ -139,13 +140,6 @@ void display_update() {
 //     gbuffer[i * DISPLAY_H + j] = ~gbuffer[i * DISPLAY_H + j].clr;
 // }
 
-// void display_update() {
-//   ch1115_write_page(_display.transmit_page, 0, _display.buffer + PAGESTART(_display.transmit_page), DISPLAY_COLUMNS);
-// }
-
-// void display_invalidate() {
-//   _display.vsync = false;
-// }
 
 status_t display_clear(ch1115_color_t color) {
   for (size_t i = 0; i < DISPLAY_PAGES; ++i) {
@@ -186,20 +180,13 @@ void display_draw_string(uint8_t x, uint8_t y, const char* str) {
   return display_draw_string_ex(x, y, _display.default_font, str);
 }
 
-// void display_draw_char_ex(font_id_t slot, const char ch) {
-
-//   size_t index = ch - ' ';
-//   size_t y = index * _display.fonts[slot].symbol.width;
-
-//   for(uint8_t column = 0; column < _display.fonts[slot].symbol.width; ++column)
-//     ch1115_set_pixel_column(_display.fonts[slot].image[y + column]);
-// }
-
 void display_draw_string_ex(uint8_t x, uint8_t y, font_id_t slot, const char* str) {
 
   uint8_t top = y;
   uint8_t left = x;
   for(; *str != 0; ++str) {
+
+    if(*str < ' ' || *str > '~') continue;
 
     // check if we need to move to the next line
     if(*str == '\n' || top >= (DISPLAY_H - _display.fonts[slot].symbol.height)) {
@@ -225,18 +212,9 @@ void display_draw_string_ex(uint8_t x, uint8_t y, font_id_t slot, const char* st
   }
 }
 
-// void display_draw_char(const char ch) {
-//   return display_draw_char_ex(_display.default_font, ch);
-// }
-
-#define X2PAGE(x) ((x) / DISPLAY_BITS_PER_COLUMN)
-#define MKMASK(width, var) {for(size_t i = 0; i < width; ++i) var = (var | 0b00000001) << 1; }
-
 void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
   size_t srch, size_t stride, const uint8_t* data) {
   
-
-
   // the height of source image must multiply with 8
   // if(srch % DISPLAY_BITS_PER_COLUMN != 0) return;
 
