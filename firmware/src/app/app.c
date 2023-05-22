@@ -11,7 +11,7 @@
 
 #include <ui/stack.h>
 #include <app/resource.h>
-#include <layout/main/select.h>
+#include <layout/main/folder.h>
 
 #define PROGRESS(x) scheduler_sleep(100);
 stack_ctx_t *stack;
@@ -43,14 +43,18 @@ void appmain() {
   }
 
   // initialize display
-  display_init(false); {
-    display_clear(clr_black);
-    display_bitblt(0, 0, 0, 0, 128, 32, RES_TEXTURE_COSMOS_SPLASH);
-    display_light(true);
+  display_init(); {
 
-    display_usefont(FONT_PIXEL_3X5, 3, 8, 8, 282, 1, RES_FONT_PIXEL3X5);
-    display_usefont(FONT_PIXEL_5X7, 5, 8, 8, 475, 1, RES_FONT_PIXEL5X7);
+    // initialize fonts
+    display_usefont(FONT_PIXEL_3X5, 3, 8, 282, 5, 1, RES_FONT_PIXEL3X5);
+    display_usefont(FONT_PIXEL_5X7, 8, 5, 475, 5, 0, RES_FONT_PIXEL5X7);
     display_default_font(FONT_PIXEL_5X7);
+
+    // print splash screen
+    display_bitblt(0, 0, 32, 128, 128, RES_TEXTURE_COSMOS_SPLASH);
+
+    // breath on effect
+    display_light(true, true);
   }
 
   // initialize peripherals
@@ -66,7 +70,7 @@ void appmain() {
     stack = stack_create(); {
 
       // set present timer at 30Hz
-      scheduler_add_task(33, cb_task_present, NULL);
+      scheduler_add_task(16, cb_task_present, NULL);
 
       // check button status every 50ms
       scheduler_add_task(50, cb_task_check_button, NULL); {
@@ -75,7 +79,7 @@ void appmain() {
       }
 
       // goto main surface
-      stack_push_surface(stack, &surface_select);
+      stack_push_surface(stack, &surface_folder);
     }
   }
 }

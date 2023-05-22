@@ -17,6 +17,7 @@ typedef enum {
 #endif
 
 I18NSTRDEF(EMPTY);
+I18NSTRDEF(FOLDER);
 
 /**
  * @brief initialize i18n string

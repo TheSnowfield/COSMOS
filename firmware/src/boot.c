@@ -81,6 +81,10 @@ void gpio_reconfigure() {
     HAL_I2C_Init(&i2c1);
     HAL_I2CEx_ConfigAnalogFilter(&i2c1, I2C_ANALOGFILTER_ENABLE);
     HAL_I2CEx_ConfigDigitalFilter(&i2c1, 0);
+    HAL_I2CEx_EnableFastModePlus(I2C_FASTMODEPLUS_I2C1);
+
+    HAL_NVIC_SetPriority(I2C1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(I2C1_IRQn);
   }
 }
 

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include <sys/display.h>
+#include <sys/scheduler.h>
 
 #include "stack.h"
 
@@ -23,6 +24,9 @@ uint8_t stack_push_surface(stack_ctx_t* ctx, const surface_def_t *def) {
   }
 
   stack_node_t *node = malloc(sizeof(stack_node_t)); {
+
+    // breath off display
+    display_light(false, true);
 
     // setup new node
     node->next = NULL;
@@ -45,7 +49,7 @@ uint8_t stack_push_surface(stack_ctx_t* ctx, const surface_def_t *def) {
   // setup surface statbar
   if(def->type == wndtype_normal ||
      def->type == wndtype_fullscreen) {
-    display_clear(0x000000); {
+    display_clear(clr_black); {
       // statbar_set_title(*def->title);
       // statbar_set_visible(def->type != wndtype_fullscreen, true);
       // statbar_draw();
@@ -60,6 +64,10 @@ uint8_t stack_push_surface(stack_ctx_t* ctx, const surface_def_t *def) {
 
   // call on create
   stack_call_event(ctx, event_surface_create, (param_t)temp, NULL);
+
+  // breath on display
+  display_light(true, true);
+
   return ctx->deepth;
 }
 
@@ -78,6 +86,9 @@ uint8_t stack_back(stack_ctx_t* ctx) {
   // check if there is a node
   if(!ctx->final) return 0;
 
+  // breath off display
+  display_light(false, true);
+
   // remove node
   stack_call_event(ctx, event_surface_destroy, (param_t)ctx->final->surface, NULL); {
     stack_node_t *temp = ctx->final;
@@ -90,7 +101,7 @@ uint8_t stack_back(stack_ctx_t* ctx) {
   // setup surface statbar
   if(ctx->final->surface->def->type == wndtype_normal ||
      ctx->final->surface->def->type == wndtype_fullscreen) {
-    display_clear(0x000000); {
+    display_clear(clr_black); {
       // statbar_set_title(*ctx->final->surface->def->title);
       // statbar_set_visible(ctx->final->surface->def->type != wndtype_fullscreen, true);
       // statbar_draw();
@@ -104,6 +115,9 @@ uint8_t stack_back(stack_ctx_t* ctx) {
 
   // back to prev surface
   stack_call_event(ctx, event_surface_create, (param_t)ctx->final->surface, NULL);
+
+  // breath on display
+  display_light(true, true);
 
   // decrease deepth
   return --ctx->deepth;

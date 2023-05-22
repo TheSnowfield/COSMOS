@@ -4,9 +4,7 @@
 #include <stdbool.h>
 #include <sys/status.h>
 
-#define CH1115_WIDTH 128
-#define CH1115_HEIGHT 32
-#define CH1115_HEIGHT_PAGE (CH1115_HEIGHT / 8)
+typedef void (* ch1115_display_ready_t)();
 
 typedef enum {
   clr_black = 0x00,
@@ -56,15 +54,11 @@ typedef enum {
 #define CH1115_REG_OFFSET_MODE_SET 0xD3 //Display Offset Mode Set:
 #define CH1115_REG_OFFSET_DATA_SET 0x00 //Display Offset Data Set: (00H~3FH)
 #define CH1115_REG_BREATHEFFECT_SET 0x23 // Set Breathing Display Effect:
-#define CH1115_REG_BREATHEFFECT_DATA 0x81 // Display Effect ON/OFF and Time Interval:
 
 // Timing & Driving Scheme Setting Commands
 #define CH1115_REG_OSC_FREQ_MODE_SET 0xD5 //Divide Ratio/Oscillator Frequency Mode Set: (D5H)
-#define CH1115_REG_OSC_FREQ_DATA_SET 0xA0
 #define CH1115_REG_PRECHARGE_MODE_SET 0xD9 //Pre-charge Period Mode Set:
-#define CH1115_REG_PRECHARGE_DATA_SET 0x22 //Discharge/Pre-charge Period Data Set: (00H - FFH)
 #define CH1115_REG_COM_LEVEL_MODE_SET 0xDB //COM Deselect Level Mode Set: (DBH)
-#define CH1115_REG_COM_LEVEL_DATA_SET 0x40 //VCOM Deselect Level Data Set: (00H - FFH)
 
 // HORIZONTAL Scrolling Commands
 #define CH1115_REG_HORIZONTAL_A_SCROLL_SETUP 0x24 //  Additional Horizontal Scroll Setup Mode Set: (24H)
@@ -101,7 +95,7 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
   { 0xA8,                               { 0x1F },   1, 1   },
   // { 0xC8,                               NULL,       0, 1   },
   { CH1115_REG_OFFSET_MODE_SET,         { 0x10 },   1, 1   },
-  { CH1115_REG_OSC_FREQ_MODE_SET,       { 0xB1 },   1, 1   },
+  { CH1115_REG_OSC_FREQ_MODE_SET,       { 0b11110001 },   1, 1   },
   { CH1115_REG_PRECHARGE_MODE_SET,      { 0x62 },   1, 1   },
   { CH1115_REG_COM_LEVEL_MODE_SET,      { 0x3F },   1, 1   },
   { 0x32,                               NULL,       0, 1   },
@@ -109,8 +103,11 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
   { CH1115_REG_COMMON_SCAN_DIR + 8,     NULL,       0, 1   },
   { CH1115_REG_SEG_SET_REMAP   + 0,     NULL,       0, 1   },
   { 0xE3,                               NULL,       0, 150 },
-  { CH1115_REG_DISPLAY_ON,              NULL,       0, 150 },
+  // { CH1115_REG_BREATHEFFECT_SET,        { 0b10000000 }, 1, 1 },
 
+  // { 0x81,                               {0b11111111},       1, 150 },
+
+  { CH1115_REG_DISPLAY_OFF,              NULL,       0, 150 },
 };
 
 #define ch1115_reset_set() I2C1_PORT->BSRR = I2C1_PIN_CTL_RST
@@ -119,25 +116,27 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
 #endif
 
 void ch1115_init();
-void ch1115_init_dma(bool mode);
-void ch1115_write_bytes_dma(uint8_t *data, uint32_t len);
 
 /**
  * @brief turn the display on
  * @return status_t return status
  */
-status_t ch1115_light_on();
+status_t ch1115_light_on(bool breathing);
 
 /**
  * @brief turn the display off
  * @return status_t return status
  */
-status_t ch1115_light_off();
+status_t ch1115_light_off(bool breathing);
 
 status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color);
 status_t ch1115_set_pixel_column(uint8_t bits);
-status_t ch1115_clear(ch1115_color_t color);
 status_t ch1115_set_page(uint8_t page);
 status_t ch1115_set_column(uint8_t column);
+void ch1115_set_readycb(ch1115_display_ready_t cb);
+status_t ch1115_write_cmd(uint8_t cmd, uint8_t* args, uint8_t len);
+// status_t ch1115_write_page(uint8_t page, uint8_t column, uint8_t* buf, uint8_t len);
+status_t ch1115_write_page(uint8_t page, uint8_t* buf, uint8_t len);
+status_t ch1115_write_page_it(uint8_t page, uint8_t* buf, uint8_t len);
 
 #endif /* _SYS_HARDWARE_CH1115_H */

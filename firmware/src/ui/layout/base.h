@@ -6,12 +6,12 @@
 #include <i18n/language.h>
 
 #define DECLARE_LAYOUT(name, titl, wndtype) \
-uint32_t surface_##name##_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp);   \
+uint32_t name##_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp);   \
                                                           \
 static const surface_def_t surface_##name = {             \
   .title = titl,                                         \
   .type = wndtype,                                        \
-  .cb_wndproc = surface_##name##_wndproc                  \
+  .cb_wndproc = name##_wndproc                  \
 };                                                        \
 
 #endif /* _UI_LAYOUT_H */

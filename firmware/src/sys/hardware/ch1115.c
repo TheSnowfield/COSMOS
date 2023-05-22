@@ -9,6 +9,12 @@
 #define X2COLUMN_L(x) (x & 0x00FF)
 #define X2COLUMN_H(x) (x >> 4)
 
+ch1115_display_ready_t __ch1115_display_ready = NULL;
+
+void ch1115_set_readycb(ch1115_display_ready_t cb) {
+  __ch1115_display_ready = cb;
+}
+
 status_t ch1115_write_cmd(uint8_t cmd, uint8_t* args, uint8_t len) {
   uint8_t buffer[Ch1115_MAX_ARGLEN] = {0}; {
     if(len > Ch1115_MAX_ARGLEN) return error;
@@ -45,16 +51,45 @@ void ch1115_init() {
       HAL_Delay(ch1115_init_cmd[i].delay);
   }
 
-  ch1115_write_cmd(CH1115_REG_SET_PAGEADD + 0, NULL, 0);
-  ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + 0, NULL, 0);
+  // ch1115_write_cmd(CH1115_REG_SET_PAGEADD + 0, NULL, 0);
+  // ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + 0, NULL, 0);
 }
 
-status_t ch1115_light_on() {
-  return ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);
+status_t ch1115_light_on(bool breathing) {
+
+  if(breathing) {
+    // ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, (uint8_t[]) { 0b00000000 }, 1);
+    // ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);
+    // for (uint8_t i = 0; i < 255; i++) {
+    //   ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, &i, 1);
+    //   HAL_Delay(3);
+    // }
+
+    ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, (uint8_t[]) { 0b00000000 }, 1);
+    ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);
+    ch1115_write_cmd(CH1115_REG_BREATHEFFECT_SET, (uint8_t[]) { 0b10000000 }, 1);
+    HAL_Delay(650);
+    ch1115_write_cmd(CH1115_REG_BREATHEFFECT_SET, (uint8_t[]) { 0b00000000 }, 1);
+    ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, (uint8_t[]) { 0b11111111 }, 1);
+    return ok;
+  }
+
+  ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);
+  return ok;
 }
 
-status_t ch1115_light_off() {
-  return ch1115_write_cmd(CH1115_REG_DISPLAY_OFF, NULL, 0);
+status_t ch1115_light_off(bool breathing) {
+  
+  if(breathing) {
+    ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, (uint8_t[]) { 0b11111111 }, 1);
+    ch1115_write_cmd(CH1115_REG_DISPLAY_ON, NULL, 0);
+    for (uint8_t i = 255; i > 0 ; --i) {
+      ch1115_write_cmd(CH1115_REG_CONTRAST_CONTROL, &i, 1);
+      HAL_Delay(0);
+    }
+  }
+
+  ch1115_write_cmd(CH1115_REG_DISPLAY_OFF, NULL, 0);
 }
 
 status_t ch1115_set_pixel(uint8_t x, uint8_t y, ch1115_color_t color) {
@@ -69,25 +104,22 @@ status_t ch1115_set_pixel_column(uint8_t bits) {
 }
 
 status_t ch1115_set_page(uint8_t page) {
-  ch1115_write_cmd(CH1115_REG_SET_PAGEADD + page, NULL, 0);
+  return ch1115_write_cmd(CH1115_REG_SET_PAGEADD + page, NULL, 0);
 }
 
 status_t ch1115_set_column(uint8_t column) {
   ch1115_write_cmd(CH1115_REG_SET_COLADD_LSB + X2COLUMN_L(column), NULL, 0);
-  ch1115_write_cmd(CH1115_REG_SET_COLADD_MSB + X2COLUMN_H(column), NULL, 0);
+  return ch1115_write_cmd(CH1115_REG_SET_COLADD_MSB + X2COLUMN_H(column), NULL, 0);
 }
 
-status_t ch1115_clear(ch1115_color_t color) {
+status_t ch1115_write_page_it(uint8_t page, uint8_t* buf, uint8_t len) {
+  ch1115_set_page(page);
+  HAL_I2C_Master_Transmit_IT(&i2c1, CH1115_ADDRESS, buf, len);
+  return ok;
+}
 
-  uint8_t clr[] = { 0x40, color, color, color, color, color, color, color, color };
-
-  for(uint8_t page = 0; page < CH1115_HEIGHT_PAGE; ++page) {
-    ch1115_set_page(page);
-    ch1115_set_column(0);
-    for(uint8_t column = 0; column < CH1115_WIDTH / 8; ++column) {
-      HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, clr, sizeof(clr), HAL_MAX_DELAY);
-    }
-  }
-
+status_t ch1115_write_page(uint8_t page, uint8_t* buf, uint8_t len) {
+  ch1115_set_page(page);
+  HAL_I2C_Master_Transmit(&i2c1, CH1115_ADDRESS, buf, len, HAL_MAX_DELAY);
   return ok;
 }

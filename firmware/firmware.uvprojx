@@ -388,6 +388,11 @@
               <FileType>1</FileType>
               <FilePath>src\boot.c</FilePath>
             </File>
+            <File>
+              <FileName>startup_stm32f030x6.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\core\device\f030k6\startup_stm32f030x6.s</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -693,6 +698,11 @@
               <FileType>1</FileType>
               <FilePath>src\core\stm32f0xx_it.c</FilePath>
             </File>
+            <File>
+              <FileName>system_stm32f0xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\core\system_stm32f0xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -850,48 +860,25 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
-        </Group>
       </Groups>
     </Target>
   </Targets>
 
   <RTE>
     <apis/>
-    <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.5.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="Standalone" Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F0 CMSIS">
-        <package name="STM32F0xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.1.1"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </component>
-    </components>
+    <components/>
     <files>
       <file attr="config" category="source" condition="STM32F030x6 ARMCC" name="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f030x6.s" version="2.3.4">
-        <instance index="0">RTE\Device\STM32F030K6Tx\startup_stm32f030x6.s</instance>
+        <instance index="0" removed="1">RTE\Device\STM32F030K6Tx\startup_stm32f030x6.s</instance>
         <component Cbundle="Standalone" Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F0 CMSIS"/>
         <package name="STM32F0xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.1.1"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\system_stm32f0xx.c" version="2.3.4">
-        <instance index="0">RTE\Device\STM32F030K6Tx\system_stm32f0xx.c</instance>
+        <instance index="0" removed="1">RTE\Device\STM32F030K6Tx\system_stm32f0xx.c</instance>
         <component Cbundle="Standalone" Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F0 CMSIS"/>
         <package name="STM32F0xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.1.1"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
     </files>
   </RTE>
