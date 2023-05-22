@@ -60,11 +60,15 @@ void appmain() {
   // initialize peripherals
   PROGRESS(10); {
     w25qx_init();
-    ch9329_init();
+    ch9329_init(); {
+      ch9329_set_usb_string(manufacturer, "NekoRush");
+      ch9329_set_usb_string(product_desc, "COSMOS USB Key");
+      ch9329_soft_reset();
+    }
   }
 
   PROGRESS(100); {
-    scheduler_sleep(1000);
+    scheduler_sleep(500);
 
     // create initial stack
     stack = stack_create(); {

@@ -28,11 +28,4 @@ bool resource_init(const uint8_t* address);
  */
 void resource_uninit();
 
-/**
- * @brief fetch resources
- * @param path path to the file
- * @return if success return file data
- */
-const uint8_t* resource_fetch(const char* path);
-
 #endif /* _APP_RESOURCE_H */

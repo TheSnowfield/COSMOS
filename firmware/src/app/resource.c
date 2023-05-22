@@ -20,12 +20,12 @@ static const resource_cache_t _caches[] = {
   { NULL, NULL, NULL }
 };
 
+rucfs_ctx_t _context;
+
 bool resource_init(const uint8_t* address) {
 
-  rucfs_ctx_t context;
-
   // load a rucfs binary
-  if(!rucfs_ok(rucfs_load((uint8_t *)address, &context))) {
+  if(!rucfs_ok(rucfs_load((uint8_t *)address, &_context))) {
     resource_uninit();
     return false;
   }
@@ -36,7 +36,7 @@ bool resource_init(const uint8_t* address) {
 
     // open the file
     rucfs_file_t* file;
-    if(!rucfs_ok(rucfs_fopen(&context, _list->file, &file))) {
+    if(!rucfs_ok(rucfs_fopen(&_context, _list->file, &file))) {
       resource_uninit();
       return false;
     }
@@ -53,6 +53,14 @@ void resource_uninit() {
   
 }
 
-const uint8_t* resource_fetch(const char* path) {
-  return NULL;
-}
+// bool resource_fetch(const char* path, const uint8_t** data, size_t* size) {
+//   if(_context == NULL) return false;
+//   if(!rucfs_exist(_context, path, NULL)) return false;
+
+//   if(rucfs_fopen(_context, path, (rucfs_file_t **)data) == rucfs_ok) {
+//     *size = ((rucfs_file_t *)*data)->length;
+//     return true;
+//   }
+
+//   return false;
+// }
