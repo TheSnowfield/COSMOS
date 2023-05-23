@@ -1,5 +1,5 @@
-#ifndef __SYS_HARDWARE_CH9329_H
-#define __SYS_HARDWARE_CH9329_H
+#ifndef _SYS_HARDWARE_CH9329_H
+#define _SYS_HARDWARE_CH9329_H
 
 #include <stdbool.h>
 #include <sys/status.h>
@@ -273,4 +273,4 @@ status_t ch9329_release_keys();
 
 status_t ch9329_soft_reset();
 
-#endif /* __SYS_HARDWARE_CH9329_H */
+#endif /* _SYS_HARDWARE_CH9329_H */

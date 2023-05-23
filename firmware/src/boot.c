@@ -86,6 +86,12 @@ void gpio_reconfigure() {
     HAL_NVIC_SetPriority(I2C1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(I2C1_IRQn);
   }
+
+  // configure button ports
+  HAL_GPIO_Init(BUTTON_PORT, &port_buttons); {
+    HAL_NVIC_SetPriority(EXTI4_15_IRQn, 1, 0);
+    HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
+  }
 }
 
 // int fputc(int ch, FILE *f) {

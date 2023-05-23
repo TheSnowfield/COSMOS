@@ -784,14 +784,19 @@
           <GroupName>APP/LAYOUT</GroupName>
           <Files>
             <File>
-              <FileName>select.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\app\layout\main\select.c</FilePath>
-            </File>
-            <File>
               <FileName>unlock.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\app\layout\security\unlock.c</FilePath>
+            </File>
+            <File>
+              <FileName>keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\layout\main\keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>pingpong.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\layout\debug\pingpong.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -867,20 +872,7 @@
   <RTE>
     <apis/>
     <components/>
-    <files>
-      <file attr="config" category="source" condition="STM32F030x6 ARMCC" name="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f030x6.s" version="2.3.4">
-        <instance index="0" removed="1">RTE\Device\STM32F030K6Tx\startup_stm32f030x6.s</instance>
-        <component Cbundle="Standalone" Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F0 CMSIS"/>
-        <package name="STM32F0xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.1.1"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="source" name="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\system_stm32f0xx.c" version="2.3.4">
-        <instance index="0" removed="1">RTE\Device\STM32F030K6Tx\system_stm32f0xx.c</instance>
-        <component Cbundle="Standalone" Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F0 CMSIS"/>
-        <package name="STM32F0xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.1.1"/>
-        <targetInfos/>
-      </file>
-    </files>
+    <files/>
   </RTE>
 
 </Project>

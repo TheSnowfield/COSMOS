@@ -17,6 +17,7 @@ typedef enum {
   btnid_none = -1,
   btnid_a,
   btnid_b,
+  btnid_max
 } button_id_t;
 
 typedef void (* cb_button_t)(button_id_t id, button_status_t type, void* userdata);
@@ -28,6 +29,7 @@ extern void cb_task_check_button(task_t* task);
 
 typedef struct {
   bool intr_changed;
+  uint32_t intr_status;
   cb_button_t cb;
   button_status_t status;
   uint32_t holdtick;

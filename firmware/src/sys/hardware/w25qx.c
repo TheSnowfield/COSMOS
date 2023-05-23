@@ -6,9 +6,9 @@
 #include <sys/panic.h>
 #include <sys/status.h>
 
-#define __NORFLASH_INTERNAL
+#define _NORFLASH_INTERNAL
 #include <hardware/w25qx.h>
-#undef __NORFLASH_INTERNAL
+#undef _NORFLASH_INTERNAL
 
 void w25qx_init() {
 

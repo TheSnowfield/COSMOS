@@ -6,10 +6,10 @@
 #include <hardware/config.h>
 
 bool button_changed;
-button_list_t button_list[2] = {0};
+button_list_t button_list[btnid_max] = {0};
 cb_button_t button_cb;
 
-button_id_t __map_button_id(uint16_t pin) {
+static button_id_t __map_button_id(uint16_t pin) {
   switch(pin) {
     case BUTTON_PIN_KEY_A:
       return btnid_a;
@@ -20,7 +20,7 @@ button_id_t __map_button_id(uint16_t pin) {
   }
 }
 
-uint16_t __map_button_io(button_id_t id) {
+static uint16_t __map_button_io(button_id_t id) {
   switch(id) {
     case btnid_a:
       return BUTTON_PIN_KEY_A;
@@ -86,8 +86,8 @@ void cb_task_check_hold(task_t* task) {
 void cb_task_check_button(task_t* task) {
   
   // no button changed
-  if(button_changed == 0) return;
-  button_changed = 0;
+  if(!button_changed) return;
+  button_changed = false;
 
   // scan all buttons
   for(size_t i = 0; i < btnid_b; ++i) {
@@ -99,10 +99,10 @@ void cb_task_check_button(task_t* task) {
     // grab button id and state
     button_id_t id = (button_id_t)i;
     uint16_t io = __map_button_io(id);
-    GPIO_PinState state = HAL_GPIO_ReadPin(BUTTON_PORT, io);
-
+    // GPIO_PinState state = HAL_GPIO_ReadPin(BUTTON_PORT, io);
+    
     // low level is pressed
-    if(!state) {
+    if(!button_list[i].intr_status) {
 
       // update status
       button_list[id].status = button_down;

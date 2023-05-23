@@ -36,7 +36,7 @@ typedef enum {
   erase_chip,
 } erase_type_t;
 
-#ifdef __NORFLASH_INTERNAL
+#ifdef _NORFLASH_INTERNAL
 
 #define W25QX_TIMEOUT 1000
 

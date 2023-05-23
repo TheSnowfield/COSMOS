@@ -17,6 +17,8 @@ static const resource_cache_t _caches[] = {
   { "/font/pixel_3x5",                     NULL, &RES_FONT_PIXEL3X5              },
   { "/font/pixel_5x7",                     NULL, &RES_FONT_PIXEL5X7              },
   { "/texture/splash",                     NULL, &RES_TEXTURE_COSMOS_SPLASH      },
+  { "/icon/folder",                        NULL, &RES_ICON_FOLDER                },
+  { "/icon/latch",                         NULL, &RES_ICON_LATCH                 },
   { NULL, NULL, NULL }
 };
 

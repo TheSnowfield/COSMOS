@@ -140,7 +140,6 @@ void display_update() {
 //     gbuffer[i * DISPLAY_H + j] = ~gbuffer[i * DISPLAY_H + j].clr;
 // }
 
-
 status_t display_clear(ch1115_color_t color) {
   for (size_t i = 0; i < DISPLAY_PAGES; ++i) {
     memset(_display.buffer[i].columns, color, DISPLAY_COLUMNS);

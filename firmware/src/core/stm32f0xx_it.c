@@ -3,6 +3,10 @@
 #include <hardware/config.h>
 #include <hardware/ch1115.h>
 
+#define _BUTTON_INTERNAL
+#include <sys/button.h>
+#undef _BUTTON_INTERNAL
+
 /******************************************************************************/
 /*           Cortex-M0 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
@@ -49,8 +53,24 @@ void SysTick_Handler(void) {
 /* please refer to the startup file (startup_stm32f0xx.s).                    */
 /******************************************************************************/
 
-void DMA1_Channel2_3_IRQHandler(void) {
-  HAL_DMA_IRQHandler(&dma_i2c1);
+void EXTI4_15_IRQHandler(void) {
+
+  GPIO_PinState stat_a = HAL_GPIO_ReadPin(BUTTON_PORT, BUTTON_PIN_KEY_A);
+  GPIO_PinState stat_b = HAL_GPIO_ReadPin(BUTTON_PORT, BUTTON_PIN_KEY_B);
+
+  if(stat_a != button_list[btnid_a].intr_status) {
+    button_list[btnid_a].intr_status = stat_a;
+    button_list[btnid_a].intr_changed = true;
+    button_changed = true;
+    HAL_GPIO_EXTI_IRQHandler(BUTTON_PIN_KEY_A);
+  }
+
+  if(stat_b != button_list[btnid_b].intr_status) {
+    button_list[btnid_b].intr_status = stat_b;
+    button_list[btnid_b].intr_changed = true;
+    button_changed = true;
+    HAL_GPIO_EXTI_IRQHandler(BUTTON_PIN_KEY_B);
+  }
 }
 
 void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {

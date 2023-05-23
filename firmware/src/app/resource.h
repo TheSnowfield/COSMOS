@@ -16,6 +16,8 @@ extern const uint8_t* RUCFSIMG;
 RESDEF(FONT_PIXEL3X5);
 RESDEF(FONT_PIXEL5X7);
 RESDEF(TEXTURE_COSMOS_SPLASH);
+RESDEF(ICON_FOLDER);
+RESDEF(ICON_LATCH);
 
 /**
  * @brief resource initialization

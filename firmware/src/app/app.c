@@ -11,7 +11,8 @@
 
 #include <ui/stack.h>
 #include <app/resource.h>
-#include <layout/main/folder.h>
+#include <layout/main/keys.h>
+#include <layout/debug/pingpong.h>
 
 #define PROGRESS(x) scheduler_sleep(100);
 stack_ctx_t *stack;
@@ -83,7 +84,7 @@ void appmain() {
       }
 
       // goto main surface
-      stack_push_surface(stack, &surface_folder);
+      stack_push_surface(stack, &surface_keys);
     }
   }
 }
