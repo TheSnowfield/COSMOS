@@ -11,8 +11,7 @@
 
 #include <ui/stack.h>
 #include <app/resource.h>
-#include <layout/main/keys.h>
-#include <layout/debug/pingpong.h>
+#include <layout/main/entry.h>
 
 #define PROGRESS(x) scheduler_sleep(100);
 stack_ctx_t *stack;
@@ -27,12 +26,12 @@ void cb_button_event(button_id_t id, button_status_t type, void* p) {
     event_button_release,
   };
 
-  stack_call_event(stack, tab[type], (param_t)stack->final->surface, id);
+  stack_call_event(stack, tab[type], (param_t)stack->final->window, id);
 }
 
 void cb_task_present(task_t* task) {
   if(!stack->final) return;
-  stack_call_event(stack, event_surface_present, (param_t)stack->final->surface, NULL);
+  stack_call_event(stack, event_window_present, (param_t)stack->final->window, NULL);
 }
 
 void appmain() {
@@ -42,6 +41,9 @@ void appmain() {
     panic(NULL);
     return;
   }
+
+  // set default language
+  i18n_init(i18n_language_en_us);
 
   // initialize display
   display_init(); {
@@ -83,8 +85,8 @@ void appmain() {
         button_set_eventcb(btnid_b, cb_button_event, NULL);
       }
 
-      // goto main surface
-      stack_push_surface(stack, &surface_keys);
+      // goto main window
+      stack_push_window(stack, &window_entry);
     }
   }
 }

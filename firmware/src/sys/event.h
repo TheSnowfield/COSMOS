@@ -4,9 +4,9 @@
 typedef enum {
   event_none = 0,
 
-  event_surface_create,
-  event_surface_present,
-  event_surface_destroy,
+  event_window_create,
+  event_window_present,
+  event_window_destroy,
 
   event_button_down,
   event_button_up,

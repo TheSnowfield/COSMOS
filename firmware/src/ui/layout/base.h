@@ -7,11 +7,11 @@
 
 #define DECLARE_LAYOUT(name, titl, wndtype) \
 uint32_t name##_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp);   \
-                                                          \
-static const surface_def_t surface_##name = {             \
-  .title = titl,                                         \
-  .type = wndtype,                                        \
-  .cb_wndproc = name##_wndproc                  \
-};                                                        \
+                                               \
+static const window_def_t window_##name = {  \
+  .title = titl,                               \
+  .type = wndtype,                             \
+  .cb_wndproc = name##_wndproc                 \
+};                                             \
 
 #endif /* _UI_LAYOUT_H */

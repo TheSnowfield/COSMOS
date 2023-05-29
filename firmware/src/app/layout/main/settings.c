@@ -6,12 +6,10 @@
 #include <app/resource.h>
 #include <ui/stack.h>
 
-uint32_t keys_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp) {
+uint32_t settings_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp) {
 
   switch(event) {
     case event_window_create: {
-
-      display_draw_string(13, 52, "Keys");
 
       break;
     }

@@ -7,15 +7,15 @@
 
 typedef struct stack_ctx stack_ctx_t;
 typedef struct stack_node stack_node_t;
-typedef struct surface surface_t;
-typedef struct surface_def surface_def_t;
+typedef struct window window_t;
+typedef struct window_def window_def_t;
 
 typedef uint32_t (* cb_wndproc)(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp);
 
 struct stack_node {
   stack_node_t* next;
   stack_node_t* last;
-  surface_t* surface;
+  window_t* window;
 };
 
 struct stack_ctx {
@@ -24,47 +24,50 @@ struct stack_ctx {
   stack_node_t *final;
 };
 
-struct surface {
+struct window {
   void *userdata;
-  const surface_def_t *def;
+  const window_def_t *def;
 };
 
 typedef enum {
   wndtype_normal     = 0,
   wndtype_fullscreen = 1,
   wndtype_popup      = 2
-} surface_type_t;
+} window_type_t;
 
-struct surface_def {
+struct window_def {
   const char** title;
-  surface_type_t type;
+  window_type_t type;
   cb_wndproc cb_wndproc;
 };
 
-#define present_counter(x) ++(*((uint32_t *)(&(((surface_t *)x)->userdata))))
-#define present_frame_scale(x, t) ((*((uint32_t *)(&(((surface_t *)x)->userdata)))) % t == 0)
+// present counter
+#define present_counter(ctx) ++(*((uint32_t *)(&(((window_t *)ctx)->userdata))))
+
+// present_frame_scale(ctx, 60) means frame / 60.
+#define present_frame_scale(ctx, scale) ((*((uint32_t *)(&(((window_t *)ctx)->userdata)))) % scale == 0)
 
 /**
- * @brief create a surface stack
+ * @brief create a window stack
  * @return if success return a stack pointer
  */
 stack_ctx_t* stack_create();
 
 /**
- * @brief push surface to the front
+ * @brief push window to the front
  * @param ctx stack context
- * @param surface surface def
+ * @param window window def
  * @return return the stack deepth
  */
-uint8_t stack_push_surface(stack_ctx_t* ctx, const surface_def_t *surface);
+uint8_t stack_push_window(stack_ctx_t* ctx, const window_def_t *window);
 
 /**
- * @brief replace the front surface
+ * @brief replace the front window
  * @param ctx stack context
- * @param surface surface def
+ * @param window window def
  * @return the stack deepth
  */
-uint8_t stack_set_surface(stack_ctx_t* ctx, surface_def_t *surface);
+uint8_t stack_set_window(stack_ctx_t* ctx, window_def_t *window);
 
 /**
  * @brief stack back
@@ -81,7 +84,7 @@ uint8_t stack_back(stack_ctx_t* ctx);
 uint8_t stack_get_deepth(stack_ctx_t* ctx);
 
 /**
- * @brief call event to the surface
+ * @brief call event to the window
  * @param ctx stack context
  * @param event event. @ref event_t
  * @param lp lparam

@@ -11,7 +11,7 @@ uint32_t pingpong_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t w
 
   switch(event) {
 
-    case event_surface_present: {
+    case event_window_present: {
 
       display_clear(clr_black);
 
