@@ -47,6 +47,8 @@ void menu_draw() {
     display_draw_string(_widget.base.x + _widget.base.width - (i+1) * 8, _widget.base.y, *_widget.items[i].i18nstr);
   }
 
+  // display_reverse_color(0, 0, 18, 128);
+
 }
 
 bool menu_set_onclick(void* callback) {

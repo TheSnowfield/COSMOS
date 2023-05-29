@@ -41,7 +41,7 @@ uint32_t entry_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t wp) 
     case event_window_create: {
 
       // initialize menu
-      menu_init(0, 0, DISPLAY_W, DISPLAY_H); {
+      menu_init(1, 0, DISPLAY_W, DISPLAY_H); {
         menu_set_onclick(menu_clicked);
         menu_set_items(_menu_items, sizeof(_menu_items) / sizeof(menu_item_t));
         menu_select(MENU_ITEM_KEYS);

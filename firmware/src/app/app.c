@@ -12,6 +12,7 @@
 #include <ui/stack.h>
 #include <app/resource.h>
 #include <layout/main/entry.h>
+#include <layout/debug/pingpong.h>
 
 #define PROGRESS(x) scheduler_sleep(100);
 stack_ctx_t *stack;
@@ -52,7 +53,7 @@ void appmain() {
     display_usefont(FONT_PIXEL_3X5, 3, 8, 282, 5, 1, RES_FONT_PIXEL3X5);
     display_usefont(FONT_PIXEL_5X7, 8, 5, 475, 5, 0, RES_FONT_PIXEL5X7);
     display_default_font(FONT_PIXEL_5X7);
-
+    
     // print splash screen
     display_bitblt(0, 0, 32, 128, 128, RES_TEXTURE_COSMOS_SPLASH);
 

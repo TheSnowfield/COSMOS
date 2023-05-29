@@ -13,7 +13,7 @@ uint32_t pingpong_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t w
 
     case event_window_present: {
 
-      display_clear(clr_black);
+      // display_clear(clr_black);
 
       static size_t x = 0, dx = -1;
       static size_t y = 0, dy = -1;

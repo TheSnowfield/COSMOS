@@ -9,9 +9,30 @@
 
 #include "display.h"
 
-#define PIXEL2BYTES(p) (p / 8)
 #define X2PAGE(x) ((x) / DISPLAY_BITS_PER_COLUMN)
-#define MKMASK(width, var) {for(size_t i = 0; i < width; ++i) var = (var | 0b00000001) << 1; }
+
+/**
+ * @brief make a mask for bitwise operation
+ * @param width the width of the mask
+ * @param var the variable to storage the mask
+ */
+#define MKMASK(width, var) { for(size_t _i = 0; _i < width - 1; ++_i) var = (var | 0b00000001) << 1; }
+
+/**
+ * @brief read a line of pixels from the display buffer
+ * @param y display y position
+ * @param buffer variable to storage the pixel data
+ */
+#define READ_LINE(y, var) { for (size_t _i = 0; _i < DISPLAY_PAGES; ++_i) \
+        var = (var | _display.buffer[_i].columns[y]) << (_i == DISPLAY_PAGES - 1 ? 0 : DISPLAY_BITS_PER_COLUMN); }
+
+/**
+ * @brief write a line of pixels to the display buffer
+ * @param y display y position
+ * @param buffer pixel data to write
+ */
+#define WRITE_LINE(y, var) { for (size_t _i = 0; _i < DISPLAY_PAGES; ++_i) \
+        _display.buffer[_i].columns[y] = (var >> (_i * DISPLAY_BITS_PER_COLUMN)) & 0xFF; }
 
 static display_t _display = { 0 };
 static page_buffer_t _buffer[DISPLAY_PAGES];
@@ -134,11 +155,30 @@ void display_update() {
 //   gbuffer[y * DISPLAY_H + x] = color;
 // }
 
-// void display_reverse_color(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
-//   for(int i = y; i < height + y; ++i)
-//   for(int j = x; j < x + width;  ++j)
-//     gbuffer[i * DISPLAY_H + j] = ~gbuffer[i * DISPLAY_H + j].clr;
-// }
+void display_reverse_color(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
+
+  // make mask for pixel selecting
+  uint32_t mask = 0; {
+    MKMASK(width, mask);
+    mask <<= x;
+  }
+
+  // process each line (width aligned with 32bit)
+  uint32_t column = 0;
+  for(size_t i = y; i < y + height; ++i, column = 0) {
+    
+    // read the display
+    READ_LINE(i, column);
+
+    // color reverse
+    // column ^= mask;
+
+    // write pixels back
+    WRITE_LINE(i, column);
+    // for (size_t i = 0; i < DISPLAY_PAGES; ++i)
+    //   _display.buffer[i].columns[dsty + y] = dstbuf[i];
+  }
+}
 
 status_t display_clear(ch1115_color_t color) {
   for (size_t i = 0; i < DISPLAY_PAGES; ++i) {
@@ -233,19 +273,18 @@ void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
   // because the destination address is not aligned.
   else {
 
+    uint32_t mask = 0; { MKMASK(srcw, mask); mask <<= dstx; }
+
     for(size_t y = 0; y < srch; ++y) {
 
       uint32_t srccol = 0, dstcol = 0;
-      column_t* dstbuf = (column_t *)&dstcol;
-      uint32_t mask = 0; { MKMASK(srcw, mask); mask <<= dstx; }
       
       // read the display
       // dstcol = (dstcol | _display.buffer[0].columns[dsty + y]) << 8;
       // dstcol = (dstcol | _display.buffer[1].columns[dsty + y]) << 8;
       // dstcol = (dstcol | _display.buffer[2].columns[dsty + y]) << 8;
       // dstcol = (dstcol | _display.buffer[3].columns[dsty + y]);
-      for (size_t i = 0; i < DISPLAY_PAGES; ++i)
-        dstcol = (dstcol | _display.buffer[i].columns[dsty + y]) << (i == DISPLAY_PAGES - 1 ? 0 : 8);
+      READ_LINE(dsty + y, dstcol);
 
       // read the source image
       // srccol = (data[1 * stride + y]);
@@ -259,8 +298,7 @@ void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
       dstcol |= srccol;
 
       // write pixels back
-      for (size_t i = 0; i < DISPLAY_PAGES; ++i)
-        _display.buffer[i].columns[dsty + y] = dstbuf[i];
+      WRITE_LINE(dsty + y, dstcol);
     }
   }
 }
