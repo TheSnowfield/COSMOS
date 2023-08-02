@@ -6,6 +6,7 @@
 
 typedef struct {
   uint32_t id;
+  uint8_t** icon;
   const char** i18nstr;
 } menu_item_t;
 

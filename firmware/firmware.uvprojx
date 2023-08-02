@@ -803,6 +803,16 @@
               <FileType>1</FileType>
               <FilePath>.\src\app\layout\main\entry.c</FilePath>
             </File>
+            <File>
+              <FileName>about.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\layout\main\about.c</FilePath>
+            </File>
+            <File>
+              <FileName>settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\app\layout\main\settings.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

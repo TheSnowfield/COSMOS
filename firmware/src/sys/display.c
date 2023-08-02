@@ -16,7 +16,7 @@
  * @param width the width of the mask
  * @param var the variable to storage the mask
  */
-#define MKMASK(width) (0b1111111111111111 >> (32 - width)) << width
+#define MKMASK(width, x) ((0xFFFFFFFF >> (32 - width)) << x)
 // #define MKMASK(width, var) { for(size_t _i = 0; _i < width - 1; ++_i) var = (var | 0b00000001) << 1; }
 
 /**
@@ -144,13 +144,27 @@ void display_update() {
     ch1115_write_page(i, (uint8_t *)(&_display.buffer[i]), sizeof(page_buffer_t));
 }
 
-// void display_fill_rect(uint8_t x, uint8_t y, uint8_t width,
-//                       uint8_t height, uint32_t color) {
+void display_fill_rect(uint8_t x, uint8_t y, uint8_t width,
+                      uint8_t height, uint32_t color) {
 
-//   for(int i = y; i < height + y; ++i)
-//   for(int j = x; j < x + width;  ++j)
-//     gbuffer[i * DISPLAY_H + j].clr = color;
-// }
+  // make mask for pixel selecting
+  uint32_t mask = MKMASK(width, x);
+
+  // process each line (width aligned with 32bit)
+  uint32_t column = 0;
+  for(size_t i = y; i < y + height; ++i, column = 0) {
+    
+    // read the display
+    READ_LINE(i, column);
+
+    // clear color
+    if(color != 0) column = mask;
+    else column ^= column & mask;
+
+    // write pixels back
+    WRITE_LINE(i, column);
+  }
+}
 
 // void display_set_pixel(uint8_t x, uint8_t y, uint32_t color) {
 //   gbuffer[y * DISPLAY_H + x] = color;
@@ -159,7 +173,7 @@ void display_update() {
 void display_reverse_color(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 
   // make mask for pixel selecting
-  uint32_t mask = MKMASK(width);
+  uint32_t mask = MKMASK(width, x);
 
   // process each line (width aligned with 32bit)
   uint32_t column = 0;
@@ -169,7 +183,7 @@ void display_reverse_color(uint8_t x, uint8_t y, uint8_t width, uint8_t height) 
     READ_LINE(i, column);
 
     // color reverse
-    // column ^= mask;
+    column ^= mask;
 
     // write pixels back
     WRITE_LINE(i, column);
@@ -186,7 +200,8 @@ status_t display_clear(ch1115_color_t color) {
 }
 
 bool display_usefont(font_id_t slot, uint8_t fontw, uint8_t fonth,
-                     uint16_t imgw, uint16_t imgh, uint8_t space, const uint8_t *img) {
+uint16_t imgw, uint16_t imgh, uint8_t space, font_direction_t direction, const uint8_t *img) {
+
   if(!img) return false;
 
   _display.fonts[slot].symbol.x = 0;
@@ -199,6 +214,7 @@ bool display_usefont(font_id_t slot, uint8_t fontw, uint8_t fonth,
   _display.fonts[slot].texture.height = imgh;
   _display.fonts[slot].image = (uint8_t *)img;
   _display.fonts[slot].space = space;
+  _display.fonts[slot].direction = direction;
 
   return true;
 }
@@ -226,11 +242,11 @@ void display_draw_string_ex(uint8_t x, uint8_t y, font_id_t slot, const char* st
     if(*str < ' ' || *str > '~') continue;
 
     // check if we need to move to the next line
-    if(*str == '\n' || top >= (DISPLAY_H - _display.fonts[slot].symbol.height)) {
-      left -= _display.fonts[slot].symbol.width;
-      top = y;
-      continue;
-    }
+    // if(*str == '\n' || top >= (DISPLAY_H - _display.fonts[slot].symbol.height)) {
+    //   left -= _display.fonts[slot].symbol.width;
+    //   top = y;
+    //   continue;
+    // }
 
     // draw character
     display_bitblt(left, top,
@@ -240,8 +256,15 @@ void display_draw_string_ex(uint8_t x, uint8_t y, font_id_t slot, const char* st
       _display.fonts[slot].image + (*str - ' ') * _display.fonts[slot].symbol.height
     );
 
-    top += _display.fonts[slot].symbol.width;
+  if(_display.fonts[slot].direction == font_horizontal) {
+    top += _display.fonts[slot].symbol.height;
     top += _display.fonts[slot].space;
+  }
+
+  else {
+    left += _display.fonts[slot].symbol.height;
+    left += _display.fonts[slot].space;
+  }
 
     // // apply font spaces
     // for(size_t i = 0; i < _display.fonts[slot].space; ++i)
@@ -272,7 +295,7 @@ void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
   // else {
 
     uint32_t srccol = 0, dstcol = 0;
-    uint32_t mask = MKMASK(srcw);
+    uint32_t mask = MKMASK(srcw, dstx);
 
     for(size_t y = 0; y < srch; ++y, srccol = 0, dstcol = 0) {
       

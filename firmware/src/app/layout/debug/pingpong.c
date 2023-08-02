@@ -22,6 +22,7 @@ uint32_t pingpong_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t w
       static size_t x = 0, dx = -1;
       static size_t y = 0, dy = -1;
       static bool pp = false;
+      static char* str[2] = {"/(@w@)\\", "\\(>w<)/"};
 
       if(x == 0) { dx = 1; pp = !pp; }
       if(x > 24) { dx = -1; pp = !pp; }
@@ -29,7 +30,7 @@ uint32_t pingpong_wndproc(stack_ctx_t *ctx, event_t event, param_t lp, param_t w
       if(y == 0) { dy = 1; pp = !pp; }
       if(y > 70) { dy = -1; pp = !pp; }
 
-      display_draw_string(x, y, "DVD");
+      display_draw_string(x, y, str[pp]);
 
       x += dx;
       y += dy;

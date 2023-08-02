@@ -42,12 +42,23 @@ void menu_select(uint8_t index) {
 
 void menu_draw() {
 
+  // draw out bound
+  display_fill_rect(_widget.base.x, _widget.base.y, _widget.base.width, 1, clr_white);
+  display_fill_rect(_widget.base.x, _widget.base.y + _widget.base.height - 1, _widget.base.width, 1, clr_white);
+
   // draw items
   for(size_t i = 0; i < _widget.items_count; ++i) {
-    display_draw_string(_widget.base.x + _widget.base.width - (i+1) * 8, _widget.base.y, *_widget.items[i].i18nstr);
+    uint8_t item_y = _widget.base.y;
+    uint8_t item_x = _widget.base.x + _widget.base.width - (i + 1) * 8;
+
+    display_bitblt(item_x, item_y + 4, 8, 6, 8, *_widget.items[i].icon);
+    display_draw_string(item_x, item_y + 13, *_widget.items[i].i18nstr);
   }
 
-  // display_reverse_color(0, 0, 18, 128);
+  // draw hightlight item
+  display_reverse_color(_widget.base.x + _widget.base.width - (_widget.items_selected + 1) * 8,
+    _widget.base.y + 2, 8, _widget.base.height - 4
+  );
 
 }
 

@@ -50,8 +50,9 @@ void appmain() {
   display_init(); {
 
     // initialize fonts
-    display_usefont(FONT_PIXEL_3X5, 3, 8, 282, 5, 1, RES_FONT_PIXEL3X5);
-    display_usefont(FONT_PIXEL_5X7, 8, 5, 475, 5, 0, RES_FONT_PIXEL5X7);
+    display_usefont(FONT_PIXEL_3X5, 3, 8, 282, 5, 1, font_horizontal, RES_FONT_PIXEL3X5);
+    display_usefont(FONT_PIXEL_5X7, 8, 5, 475, 5, 1, font_horizontal, RES_FONT_PIXEL5X7);
+    display_usefont(FONT_PIXEL_7X5, 8, 7, 665, 8, 0, font_vertical, RES_FONT_PIXEL7X5);
     display_default_font(FONT_PIXEL_5X7);
     
     // print splash screen

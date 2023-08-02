@@ -50,16 +50,23 @@ typedef struct {
   uint16_t height;
 } rect_t;
 
+typedef enum {
+  font_vertical,
+  font_horizontal
+} font_direction_t;
+
 typedef struct {
   rect_t symbol;
   rect_t texture;
   uint8_t* image;
   uint8_t space;
+  font_direction_t direction;
 } font_t;
 
 typedef enum {
   FONT_PIXEL_3X5 = 0,
   FONT_PIXEL_5X7 = 1,
+  FONT_PIXEL_7X5 = 2,
   MAX_FONT_SLOTS
 } font_id_t;
 
@@ -116,15 +123,15 @@ status_t display_light(bool en, bool breathing);
 void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
   size_t srch, size_t stride, const uint8_t* data);
 
-// /**
-//  * @brief fill the block with a color
-//  * @param x dest x
-//  * @param y dest y
-//  * @param width block width
-//  * @param height block height
-//  * @param color color
-//  */
-// void display_fill_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint32_t color);
+/**
+ * @brief fill the block with a color
+ * @param x dest x
+ * @param y dest y
+ * @param width block width
+ * @param height block height
+ * @param color color
+ */
+void display_fill_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint32_t color);
 
 /**
  * @brief set pixel color
@@ -163,7 +170,7 @@ void display_draw_string_ex(uint8_t x, uint8_t y, font_id_t slot, const char* st
  * @param space character space
  * @param img font atlas image
  */
-bool display_usefont(font_id_t slot, uint8_t fontw, uint8_t fonth, uint16_t imgw, uint16_t imgh, uint8_t space, const uint8_t *img);
+bool display_usefont(font_id_t slot, uint8_t fontw, uint8_t fonth, uint16_t imgw, uint16_t imgh, uint8_t space, font_direction_t direction, const uint8_t *img);
 
 /**
  * @brief set default font

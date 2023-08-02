@@ -50,14 +50,16 @@ uint8_t stack_push_window(stack_ctx_t* ctx, const window_def_t *def) {
   if(def->type == wndtype_normal ||
      def->type == wndtype_fullscreen) {
     display_clear(clr_black); {
-      // statbar_set_title(*def->title);
-      // statbar_set_visible(def->type != wndtype_fullscreen, true);
-      // statbar_draw();
+
+      if(def->type != wndtype_fullscreen)
+        display_draw_string_ex(0, 2, FONT_PIXEL_7X5, *def->title);
     }
   }
 
   // popup window
   else if(def->type == wndtype_popup) {
+      display_draw_string_ex(0, 2, FONT_PIXEL_7X5, *def->title);
+
     // statbar_set_title(*def->title);
     // statbar_set_visible(false, false);
   }
@@ -102,9 +104,9 @@ uint8_t stack_back(stack_ctx_t* ctx) {
   if(ctx->final->window->def->type == wndtype_normal ||
      ctx->final->window->def->type == wndtype_fullscreen) {
     display_clear(clr_black); {
-      // statbar_set_title(*ctx->final->window->def->title);
-      // statbar_set_visible(ctx->final->window->def->type != wndtype_fullscreen, true);
-      // statbar_draw();
+
+      if(ctx->final->window->def->type != wndtype_fullscreen)
+        display_draw_string_ex(0, 2, FONT_PIXEL_7X5, *ctx->final->window->def->title);
     }
   }
 
