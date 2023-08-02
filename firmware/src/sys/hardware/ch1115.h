@@ -102,7 +102,7 @@ ch1115_initcmd_t ch1115_init_cmd[] = {
   { CH1115_REG_DC_MODE_SET,             { 0x8B },   1, 1   },
   { CH1115_REG_COMMON_SCAN_DIR + 8,     NULL,       0, 1   },
   { CH1115_REG_SEG_SET_REMAP   + 0,     NULL,       0, 1   },
-  { 0xE3,                               NULL,       0, 150 },
+  // { 0xE3,                               NULL,       0, 150 },
   // { CH1115_REG_BREATHEFFECT_SET,        { 0b10000000 }, 1, 1 },
 
 

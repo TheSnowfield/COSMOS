@@ -78,7 +78,7 @@ void appmain() {
     stack = stack_create(); {
 
       // set present timer at 30Hz
-      scheduler_add_task(16, cb_task_present, NULL);
+      scheduler_add_task(33, cb_task_present, NULL);
 
       // check button status every 50ms
       scheduler_add_task(50, cb_task_check_button, NULL); {

@@ -19,6 +19,7 @@
 // Example of displaying two 'A' characters
 // on two different pages
 
+//         Big Endian Per Column
 //         0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7 (pixel)
 //         0               1               (page)
 //

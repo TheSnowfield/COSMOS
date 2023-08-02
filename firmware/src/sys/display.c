@@ -16,15 +16,16 @@
  * @param width the width of the mask
  * @param var the variable to storage the mask
  */
-#define MKMASK(width, var) { for(size_t _i = 0; _i < width - 1; ++_i) var = (var | 0b00000001) << 1; }
+#define MKMASK(width) (0b1111111111111111 >> (32 - width)) << width
+// #define MKMASK(width, var) { for(size_t _i = 0; _i < width - 1; ++_i) var = (var | 0b00000001) << 1; }
 
 /**
  * @brief read a line of pixels from the display buffer
  * @param y display y position
  * @param buffer variable to storage the pixel data
  */
-#define READ_LINE(y, var) { for (size_t _i = 0; _i < DISPLAY_PAGES; ++_i) \
-        var = (var | _display.buffer[_i].columns[y]) << (_i == DISPLAY_PAGES - 1 ? 0 : DISPLAY_BITS_PER_COLUMN); }
+#define READ_LINE(y, var) { for (size_t _i = DISPLAY_PAGES; _i > 0; --_i) \
+        var = (var | _display.buffer[_i - 1].columns[y]) << ((_i - 1) != 0 ? DISPLAY_BITS_PER_COLUMN : 0); }
 
 /**
  * @brief write a line of pixels to the display buffer
@@ -158,10 +159,7 @@ void display_update() {
 void display_reverse_color(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 
   // make mask for pixel selecting
-  uint32_t mask = 0; {
-    MKMASK(width, mask);
-    mask <<= x;
-  }
+  uint32_t mask = MKMASK(width);
 
   // process each line (width aligned with 32bit)
   uint32_t column = 0;
@@ -258,32 +256,31 @@ void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
   // if(srch % DISPLAY_BITS_PER_COLUMN != 0) return;
 
   // if destination address is aligned to the page
-  if(dstx % DISPLAY_BITS_PER_COLUMN == 0) {
+  // if(dstx % DISPLAY_BITS_PER_COLUMN == 0) {
 
-    // memcpy(_display.buffer[X2PAGE(dstx)].columns + dsty, data, srch);
-    // memcpy(_display.buffer[X2PAGE(dstx) + 1].columns + dsty, data + srch, srch);
+  //   // memcpy(_display.buffer[X2PAGE(dstx)].columns + dsty, data, srch);
+  //   // memcpy(_display.buffer[X2PAGE(dstx) + 1].columns + dsty, data + srch, srch);
 
-    // copy the data to the display buffer
-    for(size_t page = 0; page < X2PAGE(srcw); ++page) {
-      memcpy(_display.buffer[X2PAGE(dstx) + page].columns + dsty, data + page * stride, srch);
-    }
-  }
+  //   // copy the data to the display buffer
+  //   for(size_t page = 0; page < X2PAGE(srcw); ++page) {
+  //     memcpy(_display.buffer[X2PAGE(dstx) + page].columns + dsty, data + page * stride, srch);
+  //   }
+  // }
 
   // we have to bitwise the pixel in every column,
   // because the destination address is not aligned.
-  else {
+  // else {
 
-    uint32_t mask = 0; { MKMASK(srcw, mask); mask <<= dstx; }
+    uint32_t srccol = 0, dstcol = 0;
+    uint32_t mask = MKMASK(srcw);
 
-    for(size_t y = 0; y < srch; ++y) {
-
-      uint32_t srccol = 0, dstcol = 0;
+    for(size_t y = 0; y < srch; ++y, srccol = 0, dstcol = 0) {
       
       // read the display
-      // dstcol = (dstcol | _display.buffer[0].columns[dsty + y]) << 8;
-      // dstcol = (dstcol | _display.buffer[1].columns[dsty + y]) << 8;
+      // dstcol = (dstcol | _display.buffer[3].columns[dsty + y]) << 8;
       // dstcol = (dstcol | _display.buffer[2].columns[dsty + y]) << 8;
-      // dstcol = (dstcol | _display.buffer[3].columns[dsty + y]);
+      // dstcol = (dstcol | _display.buffer[1].columns[dsty + y]) << 8;
+      // dstcol = (dstcol | _display.buffer[0].columns[dsty + y]);
       READ_LINE(dsty + y, dstcol);
 
       // read the source image
@@ -294,11 +291,11 @@ void display_bitblt(uint8_t dstx, uint8_t dsty, size_t srcw,
       srccol <<= dstx;
 
       // blend the pixels up
-      dstcol ^= dstcol & mask;
+      dstcol &= ~mask;
       dstcol |= srccol;
 
       // write pixels back
       WRITE_LINE(dsty + y, dstcol);
-    }
+    // }
   }
 }
